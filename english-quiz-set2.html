@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบบทดสอบภาษาอังกฤษ ชุดที่ 2 — สกร. ระดับประถมศึกษา</title>
+<meta name="description" content="แบบทดสอบภาษาอังกฤษ ชุดที่ 2 จำนวน 20 ข้อ สำหรับนักศึกษา สกร. ระดับประถมศึกษา พร้อมเฉลยและคำอธิบาย">
+<meta property="og:title" content="แบบทดสอบภาษาอังกฤษ ชุดที่ 2 — สกร. ประถม">
+<meta property="og:description" content="ทดสอบความรู้ภาษาอังกฤษ 20 ข้อ พร้อมเฉลย ชุดที่ 2">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#0F6E56;--teal-dark:#085041;--teal-light:#E1F5EE;--teal-mid:#1D9E75;
+  --green:#3B6D11;--green-light:#EAF3DE;--green-mid:#97C459;
+  --red:#A32D2D;--red-light:#FCEBEB;--red-mid:#F09595;
+  --amber:#633806;--amber-light:#FAEEDA;--amber-mid:#EF9F27;
+  --blue:#185FA5;--blue-light:#E6F1FB;
+  --gray-bg:#f4f6f3;--gray-card:#fff;--gray-border:rgba(0,0,0,0.12);
+  --gray-surface:#eef2ed;--text:#1a1a1a;--text-muted:#5a6b58;--text-hint:#8fa08b;
+}
+body{font-family:'Sarabun',sans-serif;background:var(--gray-bg);min-height:100vh;color:var(--text)}
+.wrap{max-width:680px;margin:0 auto;padding:16px}
+
+/* Header */
+.header{background:linear-gradient(135deg,var(--teal) 0%,var(--teal-dark) 100%);border-radius:18px;padding:24px;margin-bottom:14px;color:#fff;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,0.07)}
+.header::after{content:'';position:absolute;bottom:-20px;right:40px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.05)}
+.badge{display:inline-block;background:rgba(255,255,255,0.2);border-radius:99px;padding:4px 14px;font-size:12px;font-weight:600;margin-bottom:10px;letter-spacing:.5px}
+.set-badge{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:99px;padding:3px 12px;font-size:12px;font-weight:700;margin-left:8px}
+.htitle{font-size:24px;font-weight:700;margin-bottom:5px}
+.hsub{font-size:14px;opacity:.85}
+
+/* Progress */
+.prog-card{background:var(--gray-card);border-radius:12px;border:1px solid var(--gray-border);padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:16px}
+.prog-info{flex:1}
+.prog-lbl{font-size:12px;color:var(--text-muted);margin-bottom:6px}
+.prog-bg{background:var(--gray-surface);border-radius:99px;height:8px}
+.prog-fill{background:linear-gradient(90deg,var(--teal),var(--teal-mid));border-radius:99px;height:8px;transition:width .4s ease}
+.prog-right{text-align:right}
+.prog-num{font-size:14px;font-weight:700;color:var(--text)}
+.prog-sub{font-size:12px;color:var(--text-muted);margin-top:2px}
+
+/* Question card */
+.q-card{background:var(--gray-card);border-radius:18px;border:1px solid var(--gray-border);padding:24px;margin-bottom:14px}
+.q-badge{font-size:11px;color:var(--teal-mid);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+.q-num-circle{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--teal-light);color:var(--teal);font-size:14px;font-weight:700;margin-bottom:12px}
+.q-text{font-size:18px;font-weight:600;line-height:1.65;margin-bottom:16px;color:var(--text)}
+.q-context{background:var(--gray-surface);border-left:3px solid var(--teal-mid);border-radius:0 10px 10px 0;padding:12px 16px;font-size:14px;color:var(--text-muted);margin-bottom:18px;line-height:1.8}
+
+/* Choices */
+.choices{display:flex;flex-direction:column;gap:9px}
+.choice{background:var(--gray-card);border:1.5px solid var(--gray-border);border-radius:12px;padding:13px 16px;text-align:left;cursor:pointer;font-size:15px;font-family:'Sarabun',sans-serif;color:var(--text);transition:all .15s;display:flex;align-items:center;gap:12px;line-height:1.5;width:100%}
+.choice:hover:not(:disabled){background:var(--teal-light);border-color:var(--teal-mid);color:var(--teal)}
+.choice.selected{background:var(--teal-light);border-color:var(--teal);color:var(--teal);font-weight:500}
+.choice.correct{background:var(--green-light);border-color:var(--green);color:var(--green)}
+.choice.wrong{background:var(--red-light);border-color:var(--red);color:var(--red)}
+.choice:disabled{cursor:not-allowed}
+.cletter{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;background:var(--gray-surface);color:var(--text-muted);transition:all .15s}
+.choice.selected .cletter{background:var(--teal);color:#fff}
+.choice.correct .cletter{background:var(--green);color:#fff}
+.choice.wrong .cletter{background:var(--red);color:#fff}
+
+/* Feedback */
+.feedback{border-radius:12px;padding:14px 16px;font-size:14px;margin-top:14px;line-height:1.7;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green-light);color:var(--green);border:1px solid var(--green-mid)}
+.feedback.no{background:var(--red-light);color:var(--red);border:1px solid var(--red-mid)}
+.feedback strong{font-weight:700}
+.fb-explain{font-size:13px;margin-top:6px;display:block;opacity:.85}
+
+/* Nav */
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px}
+.btn{padding:11px 26px;border-radius:10px;border:0;font-size:15px;font-weight:600;font-family:'Sarabun',sans-serif;cursor:pointer;transition:all .15s}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:var(--teal-dark)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.btn-secondary{background:var(--gray-surface);color:var(--text-muted);border:1px solid var(--gray-border)}
+.btn-secondary:hover{background:#dde8db}
+
+/* Dot nav */
+.dotnav{display:flex;gap:5px;flex-wrap:wrap;padding:4px 2px}
+.dot{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;cursor:pointer;transition:all .12s;border:none;font-family:'Sarabun',sans-serif}
+.dot-idle{background:var(--gray-surface);color:var(--text-muted)}
+.dot-active{background:var(--teal);color:#fff;transform:scale(1.1)}
+.dot-ok{background:var(--green);color:#fff}
+.dot-no{background:var(--red);color:#fff}
+
+/* Result */
+.result-wrap{background:var(--gray-card);border-radius:18px;border:1px solid var(--gray-border);padding:32px 24px;text-align:center}
+.result-icon{font-size:64px;margin-bottom:14px;display:block}
+.score-big{font-size:56px;font-weight:700;color:var(--teal);line-height:1}
+.score-denom{font-size:22px;color:var(--text-muted);margin-bottom:6px}
+.score-pct{font-size:20px;font-weight:600;color:var(--text);margin-bottom:8px}
+.grade-pill{display:inline-block;padding:5px 20px;border-radius:99px;font-size:14px;font-weight:700;margin-bottom:16px}
+.grade-A{background:var(--green-light);color:var(--green)}
+.grade-B{background:var(--teal-light);color:var(--teal-dark)}
+.grade-C{background:var(--amber-light);color:var(--amber)}
+.grade-D{background:var(--red-light);color:var(--red)}
+.result-msg{font-size:15px;color:var(--text-muted);margin-bottom:20px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 24px}
+.sbox{background:var(--gray-surface);border-radius:10px;padding:14px 8px;text-align:center}
+.snum{font-size:26px;font-weight:700}
+.snum.green{color:var(--green)}
+.snum.red{color:var(--red)}
+.snum.teal{color:var(--teal)}
+.slbl{font-size:12px;color:var(--text-muted);margin-top:3px}
+.btn-retry{background:var(--teal);color:#fff;padding:13px 36px;border-radius:12px;border:0;font-size:17px;font-weight:700;font-family:'Sarabun',sans-serif;cursor:pointer;margin-bottom:28px;transition:background .15s}
+.btn-retry:hover{background:var(--teal-dark)}
+
+/* Review */
+.review-title{font-size:17px;font-weight:700;padding-bottom:10px;border-bottom:1px solid var(--gray-border);margin-bottom:14px;text-align:left}
+.ri{padding:14px 0;border-bottom:1px solid var(--gray-border);text-align:left}
+.ri:last-child{border-bottom:none}
+.ri-q{font-size:14px;font-weight:600;margin-bottom:7px;line-height:1.55;display:flex;gap:8px;align-items:flex-start}
+.ri-tick{width:20px;height:20px;border-radius:50%;font-size:11px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;margin-top:1px}
+.ri-ok{background:var(--green-light);color:var(--green)}
+.ri-no{background:var(--red-light);color:var(--red)}
+.ri-user{font-size:13px;color:var(--text-muted);margin-bottom:3px}
+.ri-correct{font-size:13px;color:var(--green);font-weight:600;margin-bottom:3px}
+.ri-exp{font-size:12px;color:var(--text-hint);line-height:1.6}
+
+/* Start screen */
+.start-wrap{background:var(--gray-card);border-radius:18px;border:1px solid var(--gray-border);padding:32px 24px;text-align:center}
+.start-icon{font-size:72px;display:block;margin-bottom:16px}
+.start-title{font-size:26px;font-weight:700;margin-bottom:8px}
+.start-sub{font-size:15px;color:var(--text-muted);line-height:1.75;margin-bottom:22px}
+.pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+.pill{background:var(--teal-light);color:var(--teal);border-radius:99px;padding:5px 16px;font-size:13px;font-weight:600}
+.topic-box{background:var(--gray-surface);border-radius:12px;padding:16px;margin-bottom:24px;text-align:left}
+.topic-head{font-size:13px;font-weight:700;margin-bottom:10px;color:var(--text)}
+.topic-row{font-size:14px;color:var(--text-muted);padding:4px 0;display:flex;align-items:center;gap:9px}
+.topic-dot{width:7px;height:7px;border-radius:50%;background:var(--teal-mid);flex-shrink:0}
+.btn-start{background:var(--teal);color:#fff;padding:15px 48px;border-radius:14px;border:0;font-size:19px;font-weight:700;font-family:'Sarabun',sans-serif;cursor:pointer;box-shadow:0 6px 20px rgba(15,110,86,.3);transition:all .15s}
+.btn-start:hover{background:var(--teal-dark);transform:translateY(-2px)}
+.set-tag{display:inline-block;background:var(--amber-light);color:var(--amber);border-radius:8px;padding:3px 12px;font-size:13px;font-weight:700;margin-bottom:14px}
+
+@media(max-width:480px){
+  .wrap{padding:10px}
+  .htitle{font-size:20px}
+  .q-text{font-size:16px}
+  .choice{font-size:14px}
+  .score-big{font-size:44px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div>
+      <span class="badge">สกร. • ระดับประถมศึกษา</span>
+      <span class="set-badge">ชุดที่ 2</span>
+    </div>
+    <div class="htitle">📗 แบบทดสอบภาษาอังกฤษ</div>
+    <div class="hsub">English Quiz Set 2 — 20 ข้อ • ทักษะการสื่อสารและไวยากรณ์</div>
+  </div>
+  <div id="app"></div>
+</div>
+
+<script>
+const Q=[
+  {
+    id:1,cat:"Alphabet",
+    q:"Which letter comes between 'D' and 'F' in the alphabet?",
+    ctx:"",
+    c:["C","E","G","H"],
+    a:1,
+    exp:"ตัวอักษรภาษาอังกฤษ: ...C, D, E, F, G... — ระหว่าง D และ F คือ E"
+  },
+  {
+    id:2,cat:"Classroom English",
+    q:"Your teacher says 'Open your book to page 10.' What should you do?",
+    ctx:"",
+    c:["Close the book","Write your name","Turn to page 10 in your book","Stand up"],
+    a:2,
+    exp:"'Open your book to page 10' = เปิดหนังสือไปที่หน้า 10"
+  },
+  {
+    id:3,cat:"Spelling",
+    q:"Which word is spelled correctly?",
+    ctx:"",
+    c:["Scool","Skool","School","Schoool"],
+    a:2,
+    exp:"โรงเรียน = School (S-C-H-O-O-L) — ต้องมีตัว 'ch' ในคำ"
+  },
+  {
+    id:4,cat:"Adjectives",
+    q:"Which word describes how something looks or feels?",
+    ctx:"",
+    c:["Run","Happy","Eat","Go"],
+    a:1,
+    exp:"'Happy' (มีความสุข) เป็น Adjective (คำคุณศัพท์) บรรยายความรู้สึก — Run/Eat/Go เป็นกริยา (Verb)"
+  },
+  {
+    id:5,cat:"Sentence Building",
+    q:"Arrange these words into a correct sentence: [like / I / football / playing]",
+    ctx:"",
+    c:["Football I like playing.","I like playing football.","Playing I football like.","Like I playing football."],
+    a:1,
+    exp:"โครงสร้างประโยค: ประธาน (I) + กริยา (like) + กรรม (playing football) = I like playing football."
+  },
+  {
+    id:6,cat:"Weather",
+    q:"'It is raining.' means what in Thai?",
+    ctx:"",
+    c:["อากาศร้อน","ฝนกำลังตก","แดดออก","มีลมแรง"],
+    a:1,
+    exp:"'It is raining.' = ฝนกำลังตก / It is hot=อากาศร้อน, It is sunny=แดดออก, It is windy=มีลมแรง"
+  },
+  {
+    id:7,cat:"Occupations",
+    q:"What is the English word for 'หมอ'?",
+    ctx:"",
+    c:["Teacher","Nurse","Doctor","Farmer"],
+    a:2,
+    exp:"หมอ = Doctor / Teacher=ครู, Nurse=พยาบาล, Farmer=ชาวนา/เกษตรกร"
+  },
+  {
+    id:8,cat:"Articles",
+    q:"Fill in the blank: 'I have _____ umbrella.'",
+    ctx:"",
+    c:["a","an","the","—"],
+    a:1,
+    exp:"ใช้ 'an' ก่อนคำที่ขึ้นต้นด้วยเสียงสระ (a, e, i, o, u) — umbrella ออกเสียงขึ้นต้นด้วย 'u' จึงใช้ 'an'"
+  },
+  {
+    id:9,cat:"Reading Comprehension",
+    q:"What does Noi like to do after school?",
+    ctx:"My name is Noi. I am a student. After school, I like to read books and draw pictures. My favourite colour is pink.",
+    c:["Play football","Cook food","Read books and draw pictures","Watch television"],
+    a:2,
+    exp:"ข้อความระบุว่า 'I like to read books and draw pictures' — น้อยชอบอ่านหนังสือและวาดรูปหลังเลิกเรียน"
+  },
+  {
+    id:10,cat:"Plurals",
+    q:"What is the plural form of 'child'?",
+    ctx:"",
+    c:["Childs","Childes","Children","Childrens"],
+    a:2,
+    exp:"'Child' เป็น irregular noun — plural คือ 'Children' (ไม่ใช่ childs) เช่นเดียวกับ man→men, woman→women"
+  },
+  {
+    id:11,cat:"Transport",
+    q:"Which of these is a type of transport?",
+    ctx:"",
+    c:["Mango","Bicycle","Pillow","Mirror"],
+    a:1,
+    exp:"Bicycle (จักรยาน) เป็นยานพาหนะ / Mango=ผลไม้, Pillow=หมอน, Mirror=กระจก"
+  },
+  {
+    id:12,cat:"Grammar — Can",
+    q:"Choose the correct sentence:",
+    ctx:"",
+    c:["She can sings.","She can sing.","She cans sing.","She can to sing."],
+    a:1,
+    exp:"หลัง Modal verb 'can' ใช้กริยาช่องที่ 1 เสมอ (bare infinitive) — She can sing. ✓ ไม่ใส่ s และไม่ใส่ to"
+  },
+  {
+    id:13,cat:"Telling Time",
+    q:"'Quarter to four' means what time?",
+    ctx:"",
+    c:["3:15","3:30","3:45","4:15"],
+    a:2,
+    exp:"'Quarter to' = อีก 15 นาทีจะถึงชั่วโมงถัดไป — Quarter to four = 3:45 น. (อีก 15 นาทีจะถึง 4 โมง)"
+  },
+  {
+    id:14,cat:"Vocabulary — Opposites",
+    q:"What is the opposite of 'hot'?",
+    ctx:"",
+    c:["Warm","Cool","Cold","Dry"],
+    a:2,
+    exp:"ตรงข้ามของ Hot (ร้อน) คือ Cold (เย็น/หนาว) / Warm=อุ่น, Cool=เย็นสบาย, Dry=แห้ง"
+  },
+  {
+    id:15,cat:"Directions",
+    q:"'Turn left at the corner.' — What does 'left' mean in Thai?",
+    ctx:"",
+    c:["ขวา","ตรงไป","ซ้าย","หยุด"],
+    a:2,
+    exp:"Left = ซ้าย / Right=ขวา, Straight=ตรงไป, Stop=หยุด"
+  },
+  {
+    id:16,cat:"Numbers — Ordinals",
+    q:"'She finished _____ in the race.' — She was the winner.",
+    ctx:"",
+    c:["one","first","once","ones"],
+    a:1,
+    exp:"Ordinal number ใช้บอกลำดับ — 1st = First (ที่หนึ่ง/แรก) / one=เลขนับ, once=ครั้งหนึ่ง"
+  },
+  {
+    id:17,cat:"Greetings & Responses",
+    q:"Someone asks: 'How are you?' — Which is the best reply?",
+    ctx:"",
+    c:["My name is Tom.","I am fine, thank you.","I am 12 years old.","Nice to meet you."],
+    a:1,
+    exp:"'How are you?' ถามว่าเป็นยังไงบ้าง — ตอบว่า 'I am fine, thank you.' (ฉันสบายดี ขอบคุณ) ✓"
+  },
+  {
+    id:18,cat:"Sentence Type",
+    q:"Which sentence is a question?",
+    ctx:"",
+    c:["I like cats.","Close the window.","Do you have a pen?","What a beautiful day!"],
+    a:2,
+    exp:"ประโยคคำถาม (Question) ขึ้นต้นด้วย Do/Does/Is/Are/Can ฯลฯ — 'Do you have a pen?' คือประโยคคำถาม"
+  },
+  {
+    id:19,cat:"Health & Body",
+    q:"'I have a stomachache.' — What part of the body hurts?",
+    ctx:"",
+    c:["Head","Leg","Stomach","Back"],
+    a:2,
+    exp:"Stomachache = ปวดท้อง (stomach=กระเพาะ/ท้อง) / Headache=ปวดหัว, Backache=ปวดหลัง"
+  },
+  {
+    id:20,cat:"Shopping & Prices",
+    q:"A mango costs 15 baht. You pay 20 baht. How much change do you get?",
+    ctx:"Mango = 15 baht | You pay = 20 baht",
+    c:["3 baht","5 baht","10 baht","35 baht"],
+    a:1,
+    exp:"20 - 15 = 5 baht change (เงินทอน) — 'Change' ในภาษาอังกฤษแปลว่า เงินทอน"
+  }
+];
+
+const L=['A','B','C','D'];
+let s={screen:'start',cur:0,ans:Array(20).fill(null),done:Array(20).fill(false)};
+function score(){return s.ans.reduce((t,a,i)=>t+(a===Q[i].a?1:0),0)}
+function render(){document.getElementById('app').innerHTML=s.screen==='start'?startH():s.screen==='result'?resultH():quizH()}
+
+function startH(){
+  return `<div class="start-wrap">
+    <span class="start-icon">📗</span>
+    <div class="set-tag">ชุดที่ 2 / Set 2</div>
+    <div class="start-title">แบบทดสอบภาษาอังกฤษ</div>
+    <div class="start-sub">สำหรับนักศึกษา สกร. ระดับประถมศึกษา<br>ทักษะการสื่อสาร ไวยากรณ์ และคำศัพท์ 20 ข้อ</div>
+    <div class="pills">
+      <span class="pill">📝 20 ข้อ</span>
+      <span class="pill">✅ เฉลยทุกข้อ</span>
+      <span class="pill">🏆 สรุปคะแนน</span>
+      <span class="pill">🔄 ทำซ้ำได้</span>
+    </div>
+    <div class="topic-box">
+      <div class="topic-head">หัวข้อที่ครอบคลุม:</div>
+      ${[
+        'ตัวอักษรและการสะกดคำ (Alphabet & Spelling)',
+        'ภาษาในห้องเรียน (Classroom English)',
+        'การสร้างประโยค (Sentence Building)',
+        'ไวยากรณ์: Articles, Can, Plurals',
+        'การอ่านจับใจความ (Reading Comprehension)',
+        'เวลาและทิศทาง (Time & Directions)',
+        'อาชีพ สุขภาพ และชีวิตประจำวัน'
+      ].map(t=>`<div class="topic-row"><span class="topic-dot"></span>${t}</div>`).join('')}
+    </div>
+    <button class="btn-start" onclick="go()">เริ่มทำแบบทดสอบ ▶</button>
+  </div>`
+}
+
+function quizH(){
+  const q=Q[s.cur],pct=Math.round(((s.cur+1)/20)*100),done=s.done[s.cur],sel=s.ans[s.cur];
+  const choices=q.c.map((c,i)=>{
+    let cls='choice'+(done?(i===q.a?' correct':(i===sel&&sel!==q.a?' wrong':'')):(i===sel?' selected':''));
+    return `<button class="${cls}"${done?' disabled':''} onclick="pick(${i})">
+      <span class="cletter">${L[i]}</span>${c}
+    </button>`;
+  }).join('');
+
+  const fb=done?`<div class="feedback ${sel===q.a?'ok':'no'} show">
+    ${sel===q.a
+      ?'✅ <strong>ถูกต้อง!</strong>'
+      :'❌ <strong>ไม่ถูกต้อง</strong> — คำตอบที่ถูกคือ <strong>'+q.c[q.a]+'</strong>'
+    }
+    <span class="fb-explain">💡 ${q.exp}</span>
+  </div>`:'';
+
+  const navLeft=s.cur>0?`<button class="btn btn-secondary" onclick="prev()">← ย้อนกลับ</button>`:`<div></div>`;
+  const navRight=done
+    ?(s.cur===19
+      ?`<button class="btn btn-primary" onclick="result()">ดูผลคะแนน 🏆</button>`
+      :`<button class="btn btn-primary" onclick="next()">ถัดไป →</button>`
+    )
+    :`<button class="btn btn-primary"${sel===null?' disabled':''} onclick="${sel!==null?'confirm()':''}">ตรวจคำตอบ ✓</button>`;
+
+  const dots=Q.map((_,i)=>{
+    let c=i===s.cur?'dot-active':s.done[i]?(s.ans[i]===Q[i].a?'dot-ok':'dot-no'):'dot-idle';
+    return`<button class="dot ${c}" onclick="jump(${i})">${i+1}</button>`
+  }).join('');
+
+  return `
+    <div class="prog-card">
+      <div class="prog-info">
+        <div class="prog-lbl">ข้อที่ ${s.cur+1} จาก 20</div>
+        <div class="prog-bg"><div class="prog-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="prog-right">
+        <div class="prog-num">${s.cur+1}/20</div>
+        <div class="prog-sub">✅ ${s.ans.filter(a=>a!==null).length} ตอบแล้ว</div>
+      </div>
+    </div>
+    <div class="q-card">
+      <div class="q-badge">${q.cat}</div>
+      <div class="q-num-circle">${s.cur+1}</div>
+      ${q.ctx?`<div class="q-context">${q.ctx}</div>`:''}
+      <div class="q-text">${q.q}</div>
+      <div class="choices">${choices}</div>
+      ${fb}
+      <div class="nav">${navLeft}${navRight}</div>
+    </div>
+    <div class="dotnav">${dots}</div>
+  `
+}
+
+function resultH(){
+  const sc=score(),pct=Math.round(sc/20*100);
+  let grade,gc,msg,icon;
+  if(pct>=80){grade='ดีมาก (A)';gc='grade-A';msg='ยอดเยี่ยม! สื่อสารภาษาอังกฤษได้ดีมาก';icon='🏆'}
+  else if(pct>=60){grade='ดี (B)';gc='grade-B';msg='ทำได้ดี ฝึกฝนเพิ่มเติมได้อีก';icon='⭐'}
+  else if(pct>=50){grade='พอใช้ (C)';gc='grade-C';msg='ผ่านเกณฑ์ ควรทบทวนเพิ่มเติม';icon='📗'}
+  else{grade='ต้องปรับปรุง (D)';gc='grade-D';msg='ควรทบทวนและฝึกฝนเพิ่มเติม';icon='📖'}
+
+  const review=Q.map((q,i)=>{
+    const ok=s.ans[i]===q.a,ua=s.ans[i]!==null?q.c[s.ans[i]]:'(ไม่ตอบ)';
+    return`<div class="ri">
+      <div class="ri-q"><span class="ri-tick ${ok?'ri-ok':'ri-no'}">${ok?'✓':'✗'}</span>ข้อ ${i+1}: ${q.q}</div>
+      <div class="ri-user">คุณตอบ: ${ua}</div>
+      <div class="ri-correct">✅ เฉลย: ${q.c[q.a]}</div>
+      <div class="ri-exp">💡 ${q.exp}</div>
+    </div>`
+  }).join('');
+
+  return`<div class="result-wrap">
+    <span class="result-icon">${icon}</span>
+    <div class="score-big">${sc}</div>
+    <div class="score-denom">จาก 20 ข้อ</div>
+    <div class="score-pct">${pct}%</div>
+    <span class="grade-pill ${gc}">${grade}</span>
+    <div class="result-msg">${msg}</div>
+    <div class="stats">
+      <div class="sbox"><div class="snum green">${sc}</div><div class="slbl">ตอบถูก</div></div>
+      <div class="sbox"><div class="snum red">${20-sc}</div><div class="slbl">ตอบผิด</div></div>
+      <div class="sbox"><div class="snum teal">${pct}%</div><div class="slbl">คะแนน</div></div>
+    </div>
+    <button class="btn-retry" onclick="reset()">🔄 ทำแบบทดสอบอีกครั้ง</button>
+    <div class="review-title">📋 เฉลยและคำอธิบายทุกข้อ</div>
+    ${review}
+  </div>`
+}
+
+function go(){s.screen='quiz';render()}
+function pick(i){if(s.done[s.cur])return;s.ans[s.cur]=i;render()}
+function confirm(){if(s.ans[s.cur]===null)return;s.done[s.cur]=true;render()}
+function next(){if(s.cur<19){s.cur++;render()}}
+function prev(){if(s.cur>0){s.cur--;render()}}
+function jump(i){s.cur=i;render()}
+function result(){s.screen='result';render()}
+function reset(){s={screen:'start',cur:0,ans:Array(20).fill(null),done:Array(20).fill(false)};render()}
+render();
+</script>
+</body>
+</html>
