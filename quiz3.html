@@ -1,422 +1,461 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>N-NET English Quiz 3 (Primary Level)</title>
-    <style>
-        * { box-sizing: border-box; font-family: 'Sarabun', sans-serif; }
-        body { background-color: #f4f1ea; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .container { background: white; width: 100%; max-width: 650px; padding: 30px; border-radius: 16px; box-shadow: 0 8px 24px rgba(184,134,11,0.15); border-top: 8px solid #b8860b; }
-        h2 { color: #8b6508; text-align: center; margin-top: 0; font-size: 24px; }
-        .btn { background-color: #b8860b; color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 8px; cursor: pointer; width: 100%; transition: 0.3s; font-weight: bold; }
-        .btn:hover { background-color: #8b6508; }
-        input[type="text"] { width: 100%; padding: 12px; margin: 10px 0 20px 0; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; }
-        input[type="text"]:focus { border-color: #b8860b; outline: none; }
-        .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 10px; margin-bottom: 20px; height: 10px; overflow: hidden; }
-        .progress-bar { height: 100%; background-color: #b8860b; width: 0%; transition: 0.3s; }
-        .q-meta { display: flex; justify-content: space-between; color: #666; font-size: 14px; margin-bottom: 10px; font-weight: bold; }
-        .question { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 20px; line-height: 1.6; background: #faf8f5; padding: 15px; border-left: 5px solid #b8860b; border-radius: 4px; }
-        .choices { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 25px; }
-        .choice-btn { display: flex; align-items: center; background: #fff; border: 2px solid #e0e0e0; padding: 14px; border-radius: 8px; cursor: pointer; text-align: left; font-size: 16px; transition: 0.2s; min-height: 55px; width: 100%; }
-        .choice-btn:hover { border-color: #b8860b; background-color: #fffdf7; }
-        .choice-btn.selected { border-color: #b8860b; background-color: #fcf8ec; font-weight: bold; }
-        .badge { background: #b8860b; color: white; padding: 3px 8px; border-radius: 4px; margin-right: 10px; font-size: 14px; font-weight: bold; flex-shrink: 0; }
-        
-        /* Result & Feedback Styles */
-        .result-box { text-align: center; padding: 20px 0; }
-        .score-circle { width: 120px; height: 120px; border-radius: 50%; background: #fcf8ec; border: 5px solid #b8860b; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 0 auto 20px auto; color: #8b6508; }
-        .score-num { font-size: 32px; font-weight: bold; }
-        .info-table { width: 100%; border-collapse: collapse; margin: 20px 0; text-align: left; }
-        .info-table th, .info-table td { padding: 12px; border-bottom: 1px solid #ddd; }
-        .info-table th { background-color: #fdfaf2; color: #8b6508; }
-        .analysis-card { background: #fff9e6; border: 1px solid #ffe599; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left; }
-        .analysis-title { font-weight: bold; color: #b8860b; margin-bottom: 8px; display: flex; align-items: center; }
-        .review-section { margin-top: 30px; text-align: left; }
-        .review-item { border-bottom: 1px solid #eee; padding: 15px 0; }
-        .review-q { font-weight: bold; margin-bottom: 8px; color: #333; }
-        .text-success { color: #2e7d32; font-weight: bold; }
-        .text-danger { color: #c62828; font-weight: bold; }
-        .text-muted { color: #666; font-size: 14px; background: #f9f9f9; padding: 8px; border-radius: 4px; margin-top: 5px; display: block; }
-        .hidden { display: none; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบบทดสอบ N-NET ภาษาอังกฤษ ประถมศึกษา (ชุดที่ 3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1e3a8a; --primary-dark: #172554; --primary-light: #eff6ff;
+    --green: #166534; --green-light: #f0fdf4;
+    --red: #991b1b; --red-light: #fef2f2;
+    --gray-bg: #f8fafc; --gray-card: #ffffff; --gray-border: #e2e8f0;
+    --text: #0f172a; --text-muted: #475569;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Sarabun', sans-serif; background: var(--gray-bg); color: var(--text); padding-bottom: 60px; }
+  .container { max-width: 680px; margin: 0 auto; padding: 16px; }
+  
+  .header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 16px; padding: 24px; color: #fff; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(30,58,138,0.15); }
+  .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 10px; }
+  .title { font-size: 22px; font-weight: 700; margin-bottom: 5px; line-height: 1.4; }
+  .subtitle { font-size: 14px; opacity: 0.9; }
+
+  .card { background: var(--gray-card); border-radius: 16px; padding: 24px; border: 1px solid var(--gray-border); margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+  
+  .inp-group { margin-bottom: 16px; text-align: left; }
+  .inp-label { display: block; font-size: 14px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
+  .inp-text { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--gray-border); font-family: 'Sarabun', sans-serif; font-size: 16px; background: #fdfdfd; }
+  
+  .btn { width: 100%; padding: 14px; border-radius: 10px; border: none; font-family: 'Sarabun', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:disabled { background: #cbd5e1; cursor: not-allowed; }
+  .btn-secondary { background: #e2e8f0; color: var(--text); width: 48%; }
+  
+  .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; gap: 10px; }
+  .nav-buttons .btn-primary { width: 48%; }
+
+  .prog-text { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .prog-bar { background: #e2e8f0; height: 10px; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+  .prog-fill { background: var(--primary); height: 100%; width: 0%; transition: 0.3s; }
+
+  .q-badge { font-size: 12px; color: var(--primary-dark); background: var(--primary-light); display: inline-block; padding: 4px 10px; border-radius: 6px; font-weight: 700; margin-bottom: 12px; }
+  .q-text { font-size: 18px; font-weight: 600; margin-bottom: 20px; line-height: 1.6; }
+
+  .choices { display: flex; flex-direction: column; gap: 12px; }
+  .choice { display: flex; align-items: center; background: #fff; border: 2px solid var(--gray-border); padding: 14px 16px; border-radius: 12px; cursor: pointer; font-size: 15px; font-family: 'Sarabun', sans-serif; text-align: left; transition: 0.2s; width: 100%; min-height: 60px; }
+  
+  .choice.selected { border-color: var(--primary); background: var(--primary-light); color: var(--primary-dark); font-weight: 600; }
+  .choice.correct { border-color: var(--green); background: var(--green-light); color: var(--green); font-weight: 600; }
+  .choice.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); font-weight: 600; }
+  
+  .c-let { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: #f1f5f9; border-radius: 50%; margin-right: 15px; font-weight: 700; font-size: 14px; flex-shrink: 0; color: var(--text-muted); }
+  .choice.selected .c-let { background: var(--primary); color: #fff; }
+  .choice.correct .c-let { background: var(--green); color: #fff; }
+  .choice.wrong .c-let { background: var(--red); color: #fff; }
+
+  .feedback { padding: 16px; border-radius: 12px; font-size: 14px; line-height: 1.6; margin-top: 16px; }
+  .feedback.ok { background: var(--green-light); border: 1px solid var(--green); color: var(--green); }
+  .feedback.no { background: var(--red-light); border: 1px solid var(--red); color: var(--red); }
+  .fb-explain { font-size: 13px; color: #334155; background: rgba(255,255,255,0.7); padding: 10px; border-radius: 8px; margin-top: 10px; display: block; border-left: 3px solid var(--text-muted); }
+  
+  .analysis-card { background: #ffffff; border: 1px solid var(--gray-border); border-radius: 16px; padding: 24px; text-align: left; margin-bottom: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+  .analysis-header { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .analysis-item { background: #f8fafc; padding: 12px 16px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #cbd5e1; }
+  .analysis-item.weak { border-left-color: var(--red); background: #fff5f5; }
+  .analysis-item.good { border-left-color: var(--green); background: #f6fdf9; }
+  .analysis-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 4px; }
+  .analysis-tag.weak { background: var(--red-light); color: var(--red); }
+  .analysis-tag.good { background: var(--green-light); color: var(--green); }
+
+  .grid-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 20px 0; }
+  .stat-box { background: #f8fafc; padding: 16px 10px; border-radius: 12px; text-align: center; border: 1px solid var(--gray-border); }
+  .stat-num { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+  .stat-num.green { color: var(--green); }
+  .stat-num.red { color: var(--red); }
+  .stat-num.blue { color: var(--primary); }
+  
+  .review-item { padding: 16px 0; border-bottom: 1px solid var(--gray-border); text-align: left; }
+  .review-item:last-child { border-bottom: none; }
+  .r-q { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .r-a { font-size: 14px; margin-bottom: 4px; }
+  .ri-tick { display: inline-block; width: 20px; font-weight: bold; margin-right: 5px; }
+  .ri-tick.ok { color: var(--green); }
+  .ri-tick.no { color: var(--red); }
+
+  .dot-nav { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; justify-content: center; }
+  .dot { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--gray-border); font-family: 'Sarabun'; font-weight: 600; font-size: 12px; cursor: pointer; background: #fff; color: var(--text); }
+  .dot.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .dot.ok { background: var(--green-light); color: var(--green); border-color: var(--green); }
+  .dot.no { background: var(--red-light); color: var(--red); border-color: var(--red); }
+</style>
 </head>
 <body>
 
 <div class="container">
-    <div id="login-screen">
-        <h2>แบบทดสอบวิชาภาษาอังกฤษ N-NET<br>สกร.โนนสัง ระดับประถมศึกษา (ชุดที่ 3)</h2>
-        <p style="text-align: center; color: #666;">เน้นทักษะการประยุกต์ใช้และตัวลวงคุณภาพสูง สำหรับฝึกฝนนักศึกษา สกร.</p>
-        <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
-        <label style="font-weight: bold; color: #333;">ชื่อ - นามสกุล ผู้สอบ:</label>
-        <input type="text" id="student-name" placeholder="กรอกชื่อ-นามสกุลของคุณ">
-        <label style="font-weight: bold; color: #333;">รหัสนักศึกษา / สกร.อำเภอ/ตำบล:</label>
-        <input type="text" id="student-id" placeholder="กรอกรหัสนักศึกษา หรือชื่อสังกัด">
-        <button class="btn" onclick="startQuiz()">เริ่มทำแบบทดสอบ 🚀</button>
-    </div>
-
-    <div id="quiz-screen" class="hidden">
-        <div class="progress-container"><div class="progress-bar" id="progress"></div></div>
-        <div class="q-meta">
-            <span id="q-number">ข้อที่ 1/20</span>
-            <span id="q-category" style="color: #b8860b;">หมวดหมู่</span>
-        </div>
-        <div class="question" id="q-text">โจทย์คำถาม</div>
-        <div class="choices" id="choices-block"></div>
-        <button class="btn" id="next-btn" onclick="nextQuestion()" disabled>ถัดไป ➡️</button>
-    </div>
-
-    <div id="result-screen" class="hidden">
-        <h2>ผลคะแนนการทดสอบ N-NET</h2>
-        <div class="result-box">
-            <div class="score-circle">
-                <span class="score-num" id="res-score">0</span>
-                <span style="font-size:12px; color:#666;">เต็ม 20 คะแนน</span>
-            </div>
-            <h3 id="res-grade" style="color: #8b6508; margin-bottom: 20px;">ประเมินผล</h3>
-            
-            <table class="info-table">
-                <tr><th>ข้อมูลผู้เข้าสอบ</th><td id="res-name">ชื่อ</td></tr>
-                <tr><th>รหัส / สังกัด</th><td id="res-id">รหัส</td></tr>
-                <tr><th>เวลาที่บันทึกผล</th><td id="res-time">เวลา</td></tr>
-            </table>
-
-            <div class="analysis-card">
-                <div class="analysis-title">📊 ระบบวิเคราะห์และคำแนะนำรายบุคคล (Feedback)</div>
-                <div id="res-feedback" style="line-height: 1.6; color:#444;">กำลังประมวลผล...</div>
-            </div>
-
-            <button class="btn" onclick="window.location.reload()">ทำแบบทดสอบอีกครั้ง 🔄</button>
-            
-            <div class="review-section">
-                <h3 style="color: #8b6508; border-bottom: 2px solid #b8860b; padding-bottom: 8px;">เฉลยและทบทวนความรู้ (Review)</h3>
-                <div id="review-list"></div>
-            </div>
-        </div>
-    </div>
+  <div class="header">
+    <div class="badge">N-NET • สกร. ประถมศึกษา (ชุดที่ 3)</div>
+    <div class="title">🇬🇧 แบบทดสอบวิชาภาษาอังกฤษ (ระดับท้าทาย/เน้นการประยุกต์ใช้)</div>
+    <div class="subtitle" id="subtitle-text">โจทย์สถานการณ์ชีวิตประจำวัน การคิดวิเคราะห์ไวยากรณ์ และตัวลวงคุณภาพสูง</div>
+  </div>
+  
+  <div id="app"></div>
 </div>
 
 <script>
-// คลังข้อสอบชุดที่ 3 ครอบคลุม 4 สาระตามหลักสูตรประถมศึกษา สกร.
-const masterQuestions = [
-    {
-        cat: "Conversation & Everyday Use",
-        q: "A: Excuse me, where is the hospital?<br>B: Go straight and turn left. It is on your right.<br>From the dialogue, what is B doing?",
-        c: ["Giving directions", "Asking for help", "Buying a ticket", "Greeting a friend"],
-        a: 0,
-        exp: "B กำลังบอกเส้นทาง (Giving directions) จากวลี Go straight (ตรงไป) และ turn left (เลี้ยวซ้าย) ตัวลวงอื่นเป็นสถานการณ์ที่ไม่สอดคล้อง"
-    },
-    {
-        cat: "Grammar & Structure",
-        q: "Yesterday, Anna ________ a big fish in the pond behind her house.",
-        c: ["catches", "caught", "catching", "is catching"],
-        a: 1,
-        exp: "มีคำบอกเวลาในอดีตคือ 'Yesterday' (เมื่อวานนี้) กริยาต้องเปลี่ยนเป็นรูปอดีตช่องที่ 2 คือ caught (ช่องที่ 2 ของ catch)"
-    },
-    {
-        cat: "Vocabulary & Reading",
-        q: "Look at the sign:<br><b style='color:red;'>[ NO SMOKING ]</b><br>Where can you see this sign?",
-        c: ["In a swimming pool", "In a gas station", "In a playground", "On a football field"],
-        a: 1,
-        exp: "ป้าย No Smoking (ห้ามสูบบุหรี่) ต้องติดในสถานที่อันตรายจากไฟและสารไวไฟอย่าง 'Gas station' (ปั๊มน้ำมัน) มากที่สุดเพื่อความปลอดภัย"
-    },
-    {
-        cat: "Grammar & Structure",
-        q: "Somsak is a good student. ________ always does his homework on time.",
-        c: ["He", "She", "They", "Him"],
-        a: 0,
-        exp: "Somsak เป็นผู้ชายรูปประธาน ประธานของประโยคถัดไปจึงต้องใช้ Subject Pronoun คือ 'He' ตัวลวง Him เป็นรูปกรรมจึงผิดโครงสร้าง"
-    },
-    {
-        cat: "Conversation & Everyday Use",
-        q: "Situation: At a restaurant.<br>Waitress: Are you ready to order, sir?<br>Customer: Yes, ______________, please.",
-        c: ["I want to go home", "I would like a beef steak", "The food is very bad", "Can I have the bill?"],
-        a: 1,
-        exp: "เมื่อบริกร ถามความพร้อมในการสั่งอาหาร (ready to order?) คำตอบที่ประยุกต์ใช้ได้ถูกต้องคือการสั่งอาหาร 'I would like a beef steak'"
-    },
-    {
-        cat: "Vocabulary & Reading",
-        q: "Sarah always goes to bed at 10:00 PM.<br>What does '10:00 PM' mean?",
-        c: ["10 o'clock in the morning", "10 o'clock at night", "2 o'clock in the afternoon", "10 o'clock in the afternoon"],
-        a: 1,
-        exp: "ระบบเวลา PM ใช้หลังเที่ยงวันถึงก่อนเที่ยงคืน ดังนั้น 10:00 PM จึงตรงกับ 10 o'clock at night (สี่ทุ่ม) ตัวลวง AM คือตอนเช้า"
-    },
-    {
-        cat: "Grammar & Structure",
-        q: "There are three ________ playing with a ball in the garden.",
-        c: ["childs", "child", "childrens", "children"],
-        a: 3,
-        exp: "คำว่า 'three' บ่งบอกพหูพจน์ คำนามเปลี่ยนรูปของ child คือ children (โดยไม่ต้องเติม s อีก) ตัวลวงอื่นเป็นการเปลี่ยนรูปพหูพจน์ที่ผิด"
-    },
-    {
-        cat: "Vocabulary & Reading",
-        q: "You feel sick and have a bad headache. Who should you visit?",
-        c: ["A teacher", "A postman", "A doctor", "A chef"],
-        a: 2,
-        exp: "เมื่อเจ็บป่วย (feel sick) และปวดศีรษะ (headache) บุคคลที่ควรไปพบตามบริบทคือ A doctor (หมอ)"
-    },
-    {
-        cat: "Conversation & Everyday Use",
-        q: "Peter: Thank you very much for your help.<br>Mary: ________________________.",
-        c: ["You're welcome", "I'm sorry", "Goodbye", "Never mind"],
-        a: 0,
-        exp: "เมื่อมีคนกล่าวขอบคุณ (Thank you) มารยาทในการตอบรับตามสากลคือ 'You're welcome' (ด้วยความยินดี) ตัวลวง Never mind มักใช้ตอบรับคำขอโทษ"
-    },
-    {
-        cat: "Grammar & Structure",
-        q: "Listen! The birds ________ happily in the trees.",
-        c: ["is singing", "are singing", "sang", "sings"],
-        a: 1,
-        exp: "คำว่า 'Listen!' (ฟังซิ!) บ่งบอกเหตุการณ์ที่กำลังเกิดขึ้นขณะพูด (Present Continuous) ประธานคือ The birds (พหูพจน์) ต้องใช้คู่กับ are singing"
-    },
-    {
-        cat: "Vocabulary & Reading",
-        q: "Which word has the same meaning as 'BIG'?",
-        c: ["Small", "Large", "Thin", "Short"],
-        a: 1,
-        exp: "โจทย์ถามคำที่มีความหมายเหมือนกัน (Synonym) คำว่า Big แปลว่าใหญ่ ตรงกับคำว่า 'Large' ส่วนตัวลวงอย่าง Small แปลว่าเล็กซึ่งเป็นคำตรงข้าม"
-    },
-    {
-        cat: "Conversation & Everyday Use",
-        q: "Teacher: Why were you late for class this morning?<br>Student: _____________________. I missed the first school bus.",
-        c: ["I'm fine, thank you", "I woke up early", "I'm very sorry, sir", "You are welcome"],
-        a: 2,
-        exp: "เมื่อมาสายและครูถามเหตุผล นักศึกษาต้องกล่าวคำขอโทษตามมารยาทก่อนชี้แจงเหตุผล จึงตอบ 'I'm very sorry, sir'"
-    },
-    {
-        cat: "Grammar & Structure",
-        q: "Jane is taller than Mary, but Pim is the ________ girl in the class.",
-        c: ["tallest", "taller", "tall", "most tall"],
-        a: 0,
-        exp: "มีคำว่า 'the' นำหน้าช่องว่าง บ่งบอกถึงการเปรียบเทียบขั้นสูงสุด (Superlative) คำว่า tall ขั้นสุดคือ 'tallest' ตัวลวง most tall ผิดหลักไวยากรณ์"
-    },
-    {
-        cat: "Vocabulary & Reading",
-        q: "If today is Thursday. What day was <b>yesterday</b>?",
-        c: ["Friday", "Wednesday", "Tuesday", "Saturday"],
-        a: 1,
-        exp: "โจทย์ประยุกต์ใช้ปฏิทินและวัน ถ้าวันนี้คือ Thursday (วันพฤหัสบดี) เมื่อวานนี้ (yesterday) จะต้องเป็น 'Wednesday' (วันพุธ)"
-    },
-    {
-        cat: "Conversation & Everyday Use",
-        q: "Situation: You accidentally walk into someone at the market.<br>What should you say?",
-        c: ["How are you?", "Excuse me", "I'm sorry", "Thank you"],
-        a: 2,
-        exp: "การเดินชนผู้อื่นโดยไม่ตั้งใจ (accidentally walk into someone) ต้องใช้คำขอโทษในความผิดพลาดนั่นคือ 'I'm sorry' ตัวลวง Excuse me ใช้เมื่อขอทางหรือขัดจังหวะ"
-    },
-    {
-        cat: "Grammar & Structure",
-        q: "My father ________ like to drink coffee. He prefers green tea.",
-        c: ["don't", "is not", "doesn't", "never"],
-        a: 2,
-        exp: "ประธานเป็นเอกพจน์บุรุษที่ 3 (My father) ประโยคปฏิเสธของ Present Simple ต้องใช้ 'doesn't' + กริยาช่อง 1 (like)"
-    },
-    {
-        cat: "Vocabulary & Reading",
-        q: "Which fruit is yellow, sweet, and monkeys like to eat it?",
-        c: ["Apple", "Watermelon", "Orange", "Banana"],
-        a: 3,
-        exp: "คำใบ้คือ ผลไม้สีเหลือง (yellow), รสหวาน (sweet) และลิงชอบกิน (monkeys like to eat) คำตอบเดียวที่ถูกต้องตามบริบทคือ 'Banana' (กล้วย)"
-    },
-    {
-        cat: "Conversation & Everyday Use",
-        q: "A: What does your mother do?<br>B: She works at a hospital. She helps sick people.",
-        c: ["What is B's mother's job?", "Where is B's mother?", "How is B's mother?", "Who is B's mother?"],
-        a: 0,
-        exp: "คำถาม 'What does your mother do?' เป็นการถามเกี่ยวกับอาชีพ (Job) สอดคล้องกับการวิเคราะห์ข้อเลือกตัวแรก"
-    },
-    {
-        cat: "Grammar & Structure",
-        q: "We usually watch television ________ 8 o'clock in the evening.",
-        c: ["on", "at", "in", "for"],
-        a: 1,
-        exp: "การระบุเวลาที่เป็นจุดเวลาเจาะจง (8 o'clock) ตามหลักไวยากรณ์ภาษาอังกฤษต้องใช้คู่กับคำบุพบท 'at' เสมอ ตัวลวงอื่นใช้กับวัน เดือน ปี"
-    },
-    {
-        cat: "Vocabulary & Reading",
-        q: "Read the sentence:<br>'An elephant is a very heavy animal.'<br>What is the opposite word of <b>'heavy'</b>?",
-        c: ["Light", "Small", "Large", "Fat"],
-        a: 0,
-        exp: "โจทย์สั่งให้หาคำตรงข้าม (opposite word) ของคำว่า heavy (หนัก) คำตรงข้ามคือ 'Light' (เบา) ตัวลวง Small ตรงข้ามกับ Big"
-    }
+const database = [
+  {
+    cat: "Conversation (การสนทนา)",
+    q: "At a coffee shop<br>Staff: Welcome! What would you like to drink today?<br>Customer: ___________, please. I don't want any milk in it.",
+    choices: ["An iced latte", "An iced Americano", "A hot cappuccino", "A cup of hot milk"],
+    a: 1,
+    exp: "ลูกค้าระบุว่า 'I don't want any milk in it' (ไม่ใส่นมเลย) ดังนั้น 'An iced Americano' (กาแฟดำเย็น) จึงเป็นคำตอบเดียวที่ถูกต้อง ช้อยส์อื่นล้วนมีส่วนผสมของนม"
+  },
+  {
+    cat: "Conversation (การสนทนา)",
+    q: "A stranger stops you on the street.<br>Stranger: Excuse me, how can I get to the nearest hospital?<br>You: ___________ It's just around the corner next to the bank.",
+    choices: ["You're welcome.", "No problem, you can walk.", "Go straight and turn left.", "Sorry, I am busy right now."],
+    a: 2,
+    exp: "เป็นการบอกทิศทาง (Giving Directions) 'Go straight and turn left' (ตรงไปแล้วเลี้ยวซ้าย) สอดคล้องกับประโยคด้านหลังที่บอกตำแหน่งว่าอยู่ตรงหัวมุมถัดจากธนาคาร"
+  },
+  {
+    cat: "Conversation (การสนทนา)",
+    q: "Anna drops her friend's favorite glass by mistake.<br>Anna: Oh no! I am so sorry for breaking your glass.<br>Friend: ___________ I can buy a new one.",
+    choices: ["Don't worry about it.", "You should be careful.", "That's a great idea!", "Thank you very much."],
+    a: 0,
+    exp: "เมื่อมีคนขอโทษจากอุบัติเหตุ และผู้พูดบอกเสริมว่า 'I can buy a new one' แสดงถึงการปลอบใจและให้อภัย จึงต้องใช้ 'Don't worry about it' (ไม่ต้องกังวลไปหรอก)"
+  },
+  {
+    cat: "Conversation (การสนทนา)",
+    q: "Tom wants to invite his friend to a party.<br>Tom: Are you free this Saturday evening? Would you like to come to my birthday party?<br>Jane: ___________, but I have to visit my grandparents in Chiang Mai.",
+    choices: ["Yes, I'd love to", "I would love to", "No, I hate parties", "Of course, I can go"],
+    a: 1,
+    exp: "โครงสร้าง 'I would love to, but...' ใช้ในการปฏิเสธคำเชิญอย่างสุภาพ แปลว่า อยากไปนะ แต่ว่าต้องไปเยี่ยมปู่ย่า/ตายาย ตัวลวงข้อ 1 โครงสร้างผิดเนื่องจากมี Yes นำหน้าขัดแย้งกับประโยคปฏิเสธด้านหลัง"
+  },
+  {
+    cat: "Grammar (ไวยากรณ์)",
+    q: "Choose the correct sentence to complete the blank.<br>Somsak is a hardworking farmer. He ___________ early every morning to water his vegetables.",
+    choices: ["wake up", "woke up", "wakes up", "waking up"],
+    a: 2,
+    exp: "เป็นเหตุการณ์ที่เป็นกิจวัตรประจำวัน (Present Simple Tense) ประธานคือ He (เอกพจน์บุรุษที่ 3) คำกริยาต้องเติม s จึงตอบ 'wakes up'"
+  },
+  {
+    cat: "Grammar (ไวยากรณ์)",
+    q: "Yesterday, Mary ___________ to the local market because she needed to buy fresh ingredients for dinner.",
+    choices: ["go", "goes", "went", "is going"],
+    a: 2,
+    exp: "มีคำบอกเวลาคือ 'Yesterday' (เมื่อวานนี้) แสดงว่าเป็นเหตุการณ์ในอดีต (Past Simple Tense) ต้องใช้กริยาช่อง 2 คือ 'went'"
+  },
+  {
+    cat: "Grammar (ไวยากรณ์)",
+    q: "Look at the sky! Those dark clouds mean it ___________ rain very soon. We should stay inside.",
+    choices: ["is going to", "will", "goes to", "rained"],
+    a: 0,
+    exp: "การคาดเดาเหตุการณ์ในอนาคตอันใกล้ที่มีหลักฐานชัดเจนเห็นอยู่ตรงหน้า (มีเมฆครึ้มมา) ตามหลักไวยากรณ์จะนิยมใช้ 'be going to' มากกว่า will"
+  },
+  {
+    cat: "Grammar (ไวยากรณ์)",
+    q: "There are many ___________ swimming in the pond behind the school.",
+    choices: ["fish", "fishes", "fishs", "fishing"],
+    a: 0,
+    exp: "คำว่า 'fish' (ปลา) เป็นคำนามรูปพิเศษที่ไม่เปลี่ยนรูปเมื่อเป็นพหูพจน์ (Irregular Plural) แม้จะมี many ก็นับเป็น 'fish' เหมือนเดิม"
+  },
+  {
+    cat: "Grammar (ไวยากรณ์)",
+    q: "This laptop belongs to my brother. It is ___________.",
+    choices: ["him", "his", "he", "himself"],
+    a: 1,
+    exp: "ต้องการคำสรรพนามแสดงความเป็นเจ้าของที่ไม่มีคำนามตามหลัง (Possessive Pronoun) เพื่อแทน 'ของเขา' ซึ่งรูปที่ถูกต้องคือ 'his'"
+  },
+  {
+    cat: "Grammar (ไวยากรณ์)",
+    q: "Mount Everest is ___________ mountain in the world.",
+    choices: ["the higher", "the highest", "highest", "more high"],
+    a: 1,
+    exp: "การเปรียบเทียบขั้นสูงสุด (Superlative Degree) 'ที่สุดในโลก' โครงสร้างคือ the + กริยาวิเศษณ์/คุณศัพท์เติม -est จึงต้องเป็น 'the highest'"
+  },
+  {
+    cat: "Vocabulary (คำศัพท์)",
+    q: "If you want to bake a cake for a birthday party, which group of items do you need to buy?",
+    choices: ["Flour, sugar, eggs, butter", "Onions, garlic, pork, chili", "Soap, shampoo, towel, comb", "Pen, paper, ruler, eraser"],
+    a: 0,
+    exp: "โจทย์ถามถึงวัตถุดิบในการทำเค้ก (bake a cake) คำตอบคือ แป้ง (Flour), น้ำตาล (sugar), ไข่ (eggs) และเนย (butter) ตัวลวงอื่นเป็นเครื่องครัวไทย ของใช้ และเครื่องเขียน"
+  },
+  {
+    cat: "Vocabulary (คำศัพท์)",
+    q: "A person who flies an airplane and safely takes passengers to different countries is called a __________.",
+    choices: ["doctor", "pilot", "chef", "driver"],
+    a: 1,
+    exp: "ผู้ที่ขับเครื่องบิน (flies an airplane) คือ 'pilot' (นักบิน) ส่วน driver ใช้กับรถยนต์ chef คือคนทำอาหาร และ doctor คือหมอ"
+  },
+  {
+    cat: "Vocabulary (คำศัพท์)",
+    q: "During the summer in Thailand, the weather is usually very ___________.",
+    choices: ["freezing", "hot and sunny", "cool and rainy", "snowy"],
+    a: 1,
+    exp: "ฤดูร้อน (summer) ในประเทศไทย สภาพอากาศโดยทั่วไปจะต้อง 'hot and sunny' (ร้อนและมีแดดจัด) ตัวลวงอื่นเป็นอากาศหนาวจัด ฝนตก และหิมะตก"
+  },
+  {
+    cat: "Vocabulary (คำศัพท์)",
+    q: "The elephant is a very ___________ animal. It cannot fit through a small gate.",
+    choices: ["tiny", "huge", "fast", "dangerous"],
+    a: 1,
+    exp: "จากบริบทบอกว่า 'cannot fit through a small gate' (ไม่สามารถผ่านประตูลูกกรงเล็กๆ ได้) แสดงว่าช้างมีขนาดใหญ่มาก คำศัพท์ที่แปลว่าใหญ่ยักษ์คือ 'huge'"
+  },
+  {
+    cat: "Vocabulary (คำศัพท์)",
+    q: "We use our ___________ to listen to our teacher's English lesson in the classroom.",
+    choices: ["eyes", "nose", "ears", "mouth"],
+    a: 2,
+    exp: "อวัยวะที่ใช้สำหรับการฟัง (listen) คือ 'ears' (หู) ตัวลวงอื่นๆ คือ ตา จมูก และปาก"
+  },
+  {
+    cat: "Reading Sign & Notices (การอ่านป้ายเตือน)",
+    q: "You see a sign at a public park that says: <strong>'DO NOT WALK ON THE GRASS'</strong>. What does it mean?",
+    choices: ["You can play football on the lawn.", "You should walk only on the green grass.", "You must stay on the walking path and not step on the grass.", "You are allowed to sit on the grass."],
+    a: 2,
+    exp: "ป้ายห้ามเดินลัดสนาม/ห้ามเหยียบหญ้า (Do not walk on the grass) หมายถึง ให้เดินบนทางเท้าและห้ามก้าวเหยียบลงบนพื้นหญ้า"
+  },
+  {
+    cat: "Reading Sign & Notices (การอ่านป้ายเตือน)",
+    q: "In a library, there is a notice on the wall: <strong>'QUIET PLEASE'</strong>. What should you do?",
+    choices: ["You should talk loudly with your friends.", "You must not make any loud noise.", "You can listen to music without headphones.", "You should read books aloud."],
+    a: 1,
+    exp: "'Quiet Please' หมายถึง กรุณาความสงบ/งดใช้เสียง ดังนั้น พฤติกรรมที่ต้องทำคือ 'must not make any loud noise' (ต้องไม่ทำเสียงดัง)"
+  },
+  {
+    cat: "Reading Sign & Notices (การอ่านป้ายเตือน)",
+    q: "On a bottle of medicine: <strong>'KEEP OUT OF REACH OF CHILDREN'</strong>. Where should you store this bottle?",
+    choices: ["On a high shelf where small kids cannot touch it.", "In the refrigerator next to the milk.", "On the floor in the living room.", "In the children's toy box."],
+    a: 0,
+    exp: "'Keep out of reach of children' แปลว่า เก็บให้พ้นมือเด็ก ดังนั้น จึงควรเก็บไว้ในที่สูง (high shelf) ที่เด็กเอื้อมไม่ถึงเพื่อความปลอดภัย"
+  },
+  {
+    cat: "Reading Sign & Notices (การอ่านป้ายเตือน)",
+    q: "At the entrance of a department store door: <strong>'PULL'</strong>. How do you open the door?",
+    choices: ["You use your hand to push the door forward.", "You must wait for the automatic system.", "You need to bring the door toward yourself.", "You should slide the door to the left."],
+    a: 2,
+    exp: "คำว่า 'PULL' แปลว่า ดึง การดึงประตูคือการออกแรงดึงดึงบานประตูเข้าหาตัวผู้เปิด (bring toward yourself) ช้อยส์ 1 คือ ผลัก (PUSH)"
+  },
+  {
+    cat: "Reading Sign & Notices (การอ่านป้ายเตือน)",
+    q: "You see this yellow sign on a wet floor inside a mall: <strong>'CAUTION: WET FLOOR'</strong>. What is the purpose of this sign?",
+    choices: ["To ask people to help clean the floor.", "To warn people to walk carefully so they do not slip.", "To tell people that the area is closed.", "To invite people to wash their shoes."],
+    a: 1,
+    exp: "'Caution: Wet Floor' (ระวังพื้นเปียก) มีวัตถุประสงค์เพื่อเตือนให้คนเดินอย่างระมัดระวังเพื่อไม่ให้ลื่นล้ม (warn people to walk carefully so they do not slip)"
+  }
 ];
 
-let quizQuestions = [];
-let currentIdx = 0;
-let score = 0;
-let studentAnswers = [];
-let categoryStats = {};
+let state = {
+  screen: 'login', studentName: '', studentId: '', questions: [], answers: [], checked: [], current: 0
+};
 
-// ฟังก์ชันสลับอาร์เรย์ (สุ่ม)
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+function shuffleArray(arr) {
+  let newArr = arr.slice();
+  for (let i = newArr.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  }
+  return newArr;
 }
 
-// เริ่มต้นโครงสร้างแบบทดสอบ
-function startQuiz() {
-    const name = document.getElementById("student-name").value.trim();
-    const id = document.getElementById("student-id").value.trim();
+function startApp() {
+  const nameInput = document.getElementById('s_name').value;
+  const idInput = document.getElementById('s_id').value;
+  if (!nameInput.trim()) { alert('กรุณากรอกชื่อ-นามสกุลก่อนเข้าสอบครับ'); return; }
+  
+  state.studentName = nameInput;
+  state.studentId = idInput || 'สกร. ประถมศึกษา';
+  document.getElementById('subtitle-text').innerText = 'ผู้เข้าสอบ: ' + state.studentName;
+  
+  let shuffledDB = shuffleArray(database);
+  state.questions = [];
+  
+  for (let i = 0; i < shuffledDB.length; i++) {
+    let q = shuffledDB[i];
+    let correctText = q.choices[q.a];
+    let newChoices = shuffleArray(q.choices);
+    let newCorrectIndex = newChoices.indexOf(correctText);
     
-    if (!name || !id) {
-        alert("กรุณากรอกชื่อ-นามสกุล และ รหัสนักศึกษา/สังกัดก่อนเริ่มสอบครับ");
-        return;
-    }
-    
-    // ดึงโจทย์หลักมาคัดลอกและสุ่มลำดับข้อสอบ
-    quizQuestions = JSON.parse(JSON.stringify(masterQuestions));
-    shuffle(quizQuestions);
-    
-    // จำกัดจำนวน 20 ข้อ และทำการสุ่มตัวเลือกภายในข้อนั้นๆ ด้วย
-    quizQuestions = quizQuestions.slice(0, 20);
-    quizQuestions.forEach(item => {
-        let originalChoices = item.c.map((text, i) => ({ text, isCorrect: i === item.a }));
-        shuffle(originalChoices);
-        item.c = originalChoices.map(c => c.text);
-        item.a = originalChoices.findIndex(c => c.isCorrect);
+    state.questions.push({
+      cat: q.cat, q: q.q, exp: q.exp, choices: newChoices, correctAnswer: newCorrectIndex
     });
-
-    document.getElementById("login-screen").classList.add("hidden");
-    document.getElementById("quiz-screen").classList.remove("hidden");
-    showQuestion();
+  }
+  
+  state.answers = new Array(state.questions.length).fill(null);
+  state.checked = new Array(state.questions.length).fill(false);
+  state.current = 0;
+  state.screen = 'quiz';
+  renderApp();
 }
 
-// แสดงข้อสอบปัจจุบัน
-function showQuestion() {
-    const currentQ = quizQuestions[currentIdx];
+function renderApp() {
+  const app = document.getElementById('app');
+  if (state.screen === 'login') {
+    app.innerHTML = `
+      <div class="card" style="text-align: center; padding: 40px 20px;">
+        <div style="font-size: 60px; margin-bottom: 10px;">🇬🇧</div>
+        <h2 style="color: var(--primary-dark); margin-bottom: 10px;">ระบบประเมินสมรรถนะ N-NET ภาษาอังกฤษ ประถมศึกษา (ชุดที่ 3)</h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">เน้นทักษะการประยุกต์ใช้ในชีวิตประจำวัน ไวยากรณ์ฐานราก และตัวลวงเชิงวิชาการ 20 ข้อ</p>
+        <div class="inp-group">
+          <label class="inp-label">ชื่อ-นามสกุลผู้เข้าสอบ</label>
+          <input type="text" id="s_name" class="inp-text" placeholder="พิมพ์ชื่อและนามสกุลที่นี่">
+        </div>
+        <div class="inp-group">
+          <label class="inp-label">รหัสนักศึกษา / ศูนย์ สกร.</label>
+          <input type="text" id="s_id" class="inp-text" value="ระดับประถมศึกษา - ชุดที่ 3">
+        </div>
+        <button class="btn btn-primary" style="margin-top: 10px;" onclick="startApp()">เข้าสู่โหมดทดสอบภาษาอังกฤษ 🚀</button>
+      </div>
+    `;
+  } 
+  else if (state.screen === 'quiz') {
+    let total = state.questions.length;
+    let curr = state.current;
+    let q = state.questions[curr];
+    let ans = state.answers[curr];
+    let isChecked = state.checked[curr];
+    let pct = Math.round(((curr + 1) / total) * 100);
     
-    // อัปเดต Progress bar & Meta
-    document.getElementById("progress").style.width = `${((currentIdx + 1) / 20) * 100}%`;
-    document.getElementById("q-number").innerText = `ข้อที่ ${currentIdx + 1}/20`;
-    document.getElementById("q-category").innerText = `หมวด: ${currentQ.cat}`;
-    document.getElementById("q-text").innerHTML = currentQ.q;
+    let letters = ['A', 'B', 'C', 'D'];
+    let choicesHTML = '';
     
-    // สร้างปุ่มตัวเลือก
-    const choicesBlock = document.getElementById("choices-block");
-    choicesBlock.innerHTML = "";
-    
-    const labelPrefix = ["ก. ", "ข. ", "ค. ", "ง. "];
-    currentQ.c.forEach((choiceText, index) => {
-        const button = document.createElement("button");
-        button.className = "choice-btn";
-        button.innerHTML = `<span class="badge">${labelPrefix[index]}</span> ${choiceText}`;
-        button.onclick = () => selectChoice(index);
-        choicesBlock.appendChild(button);
-    });
-    
-    document.getElementById("next-btn").disabled = true;
-    document.getElementById("next-btn").innerText = currentIdx === 19 ? "ประมวลผลคะแนน 🏆" : "ถัดไป ➡️";
-}
-
-// เลือกคำตอบ
-function selectChoice(index) {
-    studentAnswers[currentIdx] = index;
-    const buttons = document.querySelectorAll(".choice-btn");
-    buttons.forEach((btn, idx) => {
-        if (idx === index) btn.classList.add("selected");
-        else btn.classList.remove("selected");
-    });
-    document.getElementById("next-btn").disabled = false;
-}
-
-// ไปข้อถัดไปหรือจบเกม
-function nextQuestion() {
-    if (currentIdx < 19) {
-        currentIdx++;
-        showQuestion();
-    } else {
-        evaluateResults();
+    for (let i = 0; i < 4; i++) {
+      let cssClass = 'choice';
+      if (isChecked) {
+        if (i === q.correctAnswer) cssClass += ' correct';
+        else if (i === ans && ans !== q.correctAnswer) cssClass += ' wrong';
+      } else {
+        if (i === ans) cssClass += ' selected';
+      }
+      choicesHTML += `<button class="${cssClass}" ${isChecked ? 'disabled' : ''} onclick="selectAnswer(${i})">
+                        <div class="c-let">${letters[i]}</div>
+                        <div>${q.choices[i]}</div>
+                      </button>`;
     }
-}
-
-// ประมวลผลคะแนนและวิเคราะห์รายบุคคล
-function evaluateResults() {
-    score = 0;
-    categoryStats = {
-        "Conversation & Everyday Use": { correct: 0, total: 0 },
-        "Grammar & Structure": { correct: 0, total: 0 },
-        "Vocabulary & Reading": { correct: 0, total: 0 }
-    };
     
-    quizQuestions.forEach((q, idx) => {
-        const isCorrect = studentAnswers[idx] === q.a;
-        if (isCorrect) score++;
+    let fbHTML = isChecked ? (
+      ans === q.correctAnswer 
+        ? `<div class="feedback ok">✅ <strong>Correct! (คำตอบถูกต้อง)</strong><div class="fb-explain">💡 <strong>หลักการคิดวิเคราะห์:</strong> ${q.exp}</div></div>`
+        : `<div class="feedback no">❌ <strong>Incorrect (วิเคราะห์คลาดเคลื่อนไปครับ)</strong> — พิจารณาแถบสีเขียวประกอบ<div class="fb-explain">💡 <strong>คำอธิบายเสริมทางวิชาการ:</strong> ${q.exp}</div></div>`
+    ) : '';
+    
+    let btnPrev = curr > 0 ? `<button class="btn btn-secondary" onclick="goPrev()">← ข้อก่อนหน้า</button>` : `<div style="width:48%"></div>`;
+    let btnNext = isChecked ? (
+      curr === total - 1 ? `<button class="btn btn-primary" onclick="showResult()">ประมวลผลสมรรถนะการสื่อสาร 🏆</button>` : `<button class="btn btn-primary" onclick="goNext()">ข้อถัดไป →</button>`
+    ) : `<button class="btn btn-primary" ${ans === null ? 'disabled' : ''} onclick="checkAnswer()">ส่งตรวจคำตอบ ✓</button>`;
+    
+    let dotsHTML = '<div class="dot-nav">';
+    for (let i = 0; i < total; i++) {
+      let dClass = 'dot';
+      if (i === curr) dClass += ' active';
+      else if (state.checked[i]) dClass += (state.answers[i] === state.questions[i].correctAnswer) ? ' ok' : ' no';
+      dotsHTML += `<button class="${dClass}" onclick="jumpTo(${i})">${i+1}</button>`;
+    }
+    dotsHTML += '</div>';
+
+    app.innerHTML = `
+      <div class="card" style="padding: 16px 20px;">
+        <div class="prog-text"><span>ข้อที่ ${curr + 1} จาก ${total}</span><span>ความคืบหน้า ${pct}%</span></div>
+        <div class="prog-bar"><div class="prog-fill" style="width: ${pct}%"></div></div>
+      </div>
+      <div class="card">
+        <div class="q-badge">${q.cat}</div>
+        <div class="q-text">${q.q}</div>
+        <div class="choices">${choicesHTML}</div>
+        ${fbHTML}
+        <div class="nav-buttons">${btnPrev}${btnNext}</div>
+      </div>
+      ${dotsHTML}
+    `;
+  }
+  else if (state.screen === 'result') {
+    let total = state.questions.length;
+    let score = 0;
+    let catStats = {};
+    
+    for (let i = 0; i < total; i++) {
+      let q = state.questions[i];
+      if (!catStats[q.cat]) catStats[q.cat] = { total: 0, correct: 0 };
+      catStats[q.cat].total++;
+      if (state.answers[i] === q.correctAnswer) { score++; catStats[q.cat].correct++; }
+    }
+    
+    let pct = Math.round((score / total) * 100);
+    
+    let analysisHTML = '';
+    for (let cat in catStats) {
+      let cPct = Math.round((catStats[cat].correct / catStats[cat].total) * 100);
+      let isWeak = cPct < 60;
+      let tagClass = isWeak ? 'weak' : 'good';
+      let tagText = isWeak ? '⚠️ ควรเร่งทบทวนจุดสับสน' : '✅ ผ่านเกณฑ์การวิเคราะห์ระดับพื้นฐาน';
+      
+      let advice = '';
+      if(cat === "Conversation (การสนทนา)") advice = isWeak ? 'ยังมีจุดสับสนในการเลือกคำตอบให้เข้ากับบริบทเงื่อนไขของสถานการณ์ (เช่น การปฏิเสธคำเชิญ หรือรายละเอียดเครื่องดื่ม)' : 'ดีเยี่ยม! เข้าใจสำนวนการสื่อสารและสามารถโต้ตอบบทสนทนาในชีวิตประจำวันได้อย่างเหมาะสมตามมารยาทสังคม';
+      else if(cat === "Grammar (ไวยากรณ์)") advice = isWeak ? 'ควรกลับไปทบทวนเรื่องการผันกริยาตามกาลเวลา (Present/Past Tense) และรูปคำนามพหูพจน์ที่ไม่เปลี่ยนรูป' : 'ยอดเยี่ยมมาก! มีความแม่นยำในโครงสร้างไวยากรณ์พื้นฐาน ประธานและกริยาสอดคล้องกันดี รวมถึงเข้าใจการเปรียบเทียบขั้นสุด';
+      else if(cat === "Vocabulary (คำศัพท์)") advice = isWeak ? 'ควรหมั่นท่องจำและจัดหมวดหมู่คำศัพท์รอบตัว เช่น หมวดอาหาร สภาพอากาศ อาชีพ และส่วนประกอบร่างกายเพิ่มเติม' : 'ดีมาก! คลังคำศัพท์กว้างขวาง สามารถเชื่อมโยงคำศัพท์กับคำจำกัดความและบริบทแวดล้อมได้อย่างถูกต้องแม่นยำ';
+      else if(cat === "Reading Sign & Notices (การอ่านป้ายเตือน)") advice = isWeak ? 'สับสนความหมายของคำหลักบนป้ายสาธารณะ เช่น ความแตกต่างระหว่างการผลัก/การดึง และคำสั่งห้ามกระทำ' : 'สุดยอด! สามารถถอดรหัสป้ายเตือน สัญลักษณ์ และประกาศสาธารณะได้อย่างถูกต้อง ช่วยให้ปฏิบัติตัวในสังคมได้อย่างปลอดภัย';
+
+      analysisHTML += `
+        <div class="analysis-item ${isWeak ? 'weak' : 'good'}">
+          <span class="analysis-tag ${tagClass}">${tagText}</span>
+          <div style="font-weight: 700; font-size: 15px; margin-bottom: 2px;">ทักษะส่วน: ${cat}</div>
+          <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 6px;">ทำถูกต้อง ${catStats[cat].correct} จาก ${catStats[cat].total} ข้อ (${cPct}%)</div>
+          <div style="font-size: 13px; line-height:1.4;">💡 <strong>คำแนะนำรายบุคคล:</strong> ${advice}</div>
+        </div>
+      `;
+    }
+
+    let reviewHTML = '<div class="card" style="margin-top:20px"><div style="font-weight:700; margin-bottom:12px;">📋 รายงานการตรวจสอบคำตอบรายข้ออย่างละเอียด</div>';
+    for (let i = 0; i < total; i++) {
+      let q = state.questions[i];
+      let isCorr = (state.answers[i] === q.correctAnswer);
+      reviewHTML += `
+        <div class="review-item">
+          <div class="r-q"><span class="ri-tick ${isCorr?'ok':'no'}">${isCorr?'✓':'✗'}</span> ข้อ ${i+1}: ${q.q}</div>
+          <div class="r-a" style="color:var(--text-muted)">คำตอบของคุณ: ${state.answers[i] !== null ? q.choices[state.answers[i]] : 'ไม่ได้เลือกคำตอบ'}</div>
+          <div class="r-a" style="color:var(--green); font-weight:600;">คำตอบที่ถูกต้อง: ${q.choices[q.correctAnswer]}</div>
+        </div>
+      `;
+    }
+    reviewHTML += '</div>';
+
+    app.innerHTML = `
+      <div class="card" style="text-align:center; padding:32px 20px;">
+        <h3 style="color:var(--primary-dark); margin-bottom:6px;">ผลประเมินสมรรถนะผู้เรียน N-NET ภาษาอังกฤษ (ชุดที่ 3)</h3>
+        <div style="font-size:18px; font-weight:700;">คุณ ${state.studentName}</div>
+        <div style="font-size:13px; color:var(--text-muted); margin-bottom:24px;">ระดับ/สังกัด: ${state.studentId}</div>
         
-        if (categoryStats[q.cat]) {
-            categoryStats[q.cat].total++;
-            if (isCorrect) categoryStats[q.cat].correct++;
-        }
-    });
+        <div style="font-size:56px; font-weight:800; color:var(--primary-dark); line-height:1;">${score}</div>
+        <div style="font-size:14px; color:var(--text-muted); margin-bottom:20px;">คะแนนรวมสุทธิ (จากทั้งหมด ${total} ข้อ)</div>
+        
+        <div class="grid-stats">
+          <div class="stat-box"><div class="stat-num green">${score}</div><div style="font-size:12px;color:var(--text-muted)">ตอบถูก (ข้อ)</div></div>
+          <div class="stat-box"><div class="stat-num red">${total - score}</div><div style="font-size:12px;color:var(--text-muted)">ตอบผิด (ข้อ)</div></div>
+          <div class="stat-box"><div class="stat-num blue">${pct}%</div><div style="font-size:12px;color:var(--text-muted)">ความแม่นยำรวม</div></div>
+        </div>
+      </div>
 
-    // ปรับหน้าจอแสดงผลลัพธ์
-    document.getElementById("quiz-screen").classList.add("hidden");
-    document.getElementById("result-screen").classList.remove("hidden");
-    
-    document.getElementById("res-score").innerText = score;
-    document.getElementById("res-name").innerText = document.getElementById("student-name").value;
-    document.getElementById("res-id").innerText = document.getElementById("student-id").value;
-    document.getElementById("res-time").innerText = new Date().toLocaleString("th-TH");
-    
-    // ตัดเกรดผู้เรียน
-    let gradeText = "";
-    if (score >= 16) gradeText = "ระดับ: ดีเยี่ยม (Excellent) 🎉 สอบผ่านเกณฑ์ N-NET แน่นอน";
-    else if (score >= 12) gradeText = "ระดับ: ดี (Good) 👍 มีความรู้พื้นฐานพร้อมสอบ";
-    else if (score >= 10) gradeText = "ระดับ: ผ่านเกณฑ์ขั้นต่ำ (Pass) 📝 ควรทบทวนเพิ่มเติม";
-    else gradeText = "ระดับ: ต้องปรับปรุง (Improvement) ⚠️ เร่งทบทวนเนื้อหาโดยด่วน";
-    document.getElementById("res-grade").innerText = gradeText;
-    
-    // ระบบวิเคราะห์คำแนะนำย้อนกลับเชิงลึกรายบุคคล (Personalized Feedback)
-    let feedbackHtml = "<ul>";
-    let weakestCat = "";
-    let minRate = 100;
-    
-    for (const [catName, data] of Object.entries(categoryStats)) {
-        const rate = data.total > 0 ? (data.correct / data.total) * 100 : 100;
-        feedbackHtml += `<li><b>หมวด ${catName}:</b> ทำได้ ${data.correct}/${data.total} ข้อ (${rate.toFixed(0)}%)</li>`;
-        if (rate < minRate) {
-            minRate = rate;
-            weakestCat = catName;
-        }
-    }
-    feedbackHtml += "</ul>";
-    
-    if (minRate < 60 && weakestCat !== "") {
-        feedbackHtml += `<div style="margin-top: 10px; padding: 10px; background: #fff; border-left: 4px solid #c62828; border-radius:4px;">💡 <b>ข้อแนะนำส่วนบุคคล:</b> คุณควรเน้นกลับไปทบทวนใน <b>หมวด ${weakestCat}</b> เป็นพิเศษเนื่องจากทำคะแนนได้ต่ำกว่า 60% ฝึกอ่านบทสนทนาและจำโครงสร้างประโยคเพิ่มเติมเพื่อเสริมความมั่นใจก่อนสอบจริงครับ!</div>`;
-    } else {
-        feedbackHtml += `<div style="margin-top: 10px; padding: 10px; background: #fff; border-left: 4px solid #2e7d32; border-radius:4px;">🌟 <b>ข้อแนะนำส่วนบุคคล:</b> ภาพรวมทักษะภาษาอังกฤษของคุณอยู่ในเกณฑ์สมดุลดีมาก รักษามาตรฐานการวิเคราะห์คำศัพท์และความละเอียดรอบคอบในห้องสอบจริงไว้เพื่อคะแนนระดับสูงสุดครับ!</div>`;
-    }
-    document.getElementById("res-feedback").innerHTML = feedbackHtml;
-    
-    // สร้างหน้าตารางรีวิวเฉลยละเอียด
-    renderReview();
+      <div class="analysis-card">
+        <div class="analysis-header">📊 รายงานวิเคราะห์ผลการเรียนรู้รายทักษะ</div>
+        ${analysisHTML}
+      </div>
+      
+      <button class="btn btn-primary" onclick="location.reload()">🔄 ทำใหม่อีกครั้ง (สุ่มคำถามและสลับตัวเลือกใหม่)</button>
+      ${reviewHTML}
+    `;
+  }
 }
 
-// เรนเดอร์ส่วนทบทวนและเฉลยคำตอบ
-function renderReview() {
-    const reviewList = document.getElementById("review-list");
-    reviewList.innerHTML = "";
-    const labelPrefix = ["ก. ", "ข. ", "ค. ", "ง. "];
-    
-    quizQuestions.forEach((q, idx) => {
-        const div = document.createElement("div");
-        div.className = "review-item";
-        
-        const isCorrect = studentAnswers[idx] === q.a;
-        const statusText = isCorrect ? `<span class="text-success">✓ ตอบถูก</span>` : `<span class="text-danger">✗ ตอบผิด</span>`;
-        
-        div.innerHTML = `
-            <div class="review-q">ข้อที่ ${idx + 1}: ${q.q} (${q.cat}) ${statusText}</div>
-            <div>คุณตอบ: <span class="${isCorrect ? 'text-success' : 'text-danger'}">${labelPrefix[studentAnswers[idx]]} ${q.c[studentAnswers[idx]]}</span></div>
-            ${!isCorrect ? `<div>คำตอบที่ถูก: <span class="text-success">${labelPrefix[q.a]} ${q.c[q.a]}</span></div>` : ''}
-            <span class="text-muted">💡 <b>คำอธิบาย:</b> ${q.exp}</span>
-        `;
-        reviewList.appendChild(div);
-    });
-}
+function selectAnswer(index) { if (state.checked[state.current]) return; state.answers[state.current] = index; renderApp(); }
+function checkAnswer() { if (state.answers[state.current] === null) return; state.checked[state.current] = true; renderApp(); }
+function goNext() { if (state.current < state.questions.length - 1) { state.current++; renderApp(); } }
+function goPrev() { if (state.current > 0) { state.current--; renderApp(); } }
+function jumpTo(index) { state.current = index; renderApp(); }
+function showResult() { state.screen = 'result'; renderApp(); }
+
+renderApp();
 </script>
-
 </body>
 </html>
