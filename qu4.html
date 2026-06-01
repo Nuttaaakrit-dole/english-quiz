@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบบทดสอบ N-NET ภาษาอังกฤษ ระดับประถมศึกษา (ชุดที่ 4)</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --primary: #1e3a8a; --primary-dark: #172554; --primary-light: #eff6ff;
+    --green: #15803d; --green-light: #f0fdf4; --green-mid: #86efac;
+    --red: #b91c1c; --red-light: #fef2f2; --red-mid: #fca5a5;
+    --amber-light: #fffbeb; --amber: #b45309;
+    --gray-bg: #f1f5f9; --gray-card: #ffffff; --gray-border: #cbd5e1;
+    --text: #0f172a; --text-muted: #475569;
+  }
+  body { font-family: 'Sarabun', sans-serif; background: var(--gray-bg); color: var(--text); padding: 16px 8px; line-height: 1.6; }
+  .container { max-width: 650px; margin: 0 auto; padding-bottom: 60px; }
+  
+  .header-card { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 24px; border-radius: 16px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; }
+  .header-card h1 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .header-card p { font-size: 14px; opacity: 0.9; }
+
+  .card { background: var(--gray-card); border: 1px solid var(--gray-border); border-radius: 16px; padding: 24px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+  
+  /* Form Styling */
+  .form-group { margin-bottom: 16px; text-align: left; }
+  .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+  .form-control { width: 100%; padding: 12px; border: 1px solid var(--gray-border); border-radius: 8px; font-family: 'Sarabun', sans-serif; font-size: 15px; transition: border-color 0.2s; }
+  .form-control:focus { outline: none; border-color: var(--primary); background-color: var(--primary-light); }
+  
+  /* Progress Bar */
+  .progress-container { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; font-size: 14px; color: var(--text-muted); font-weight: 500; }
+  .progress-bar-bg { background: #e2e8f0; height: 6px; border-radius: 3px; flex-grow: 1; margin: 0 12px; position: relative; overflow: hidden; }
+  .progress-bar-fill { background: var(--primary); height: 100%; width: 0%; transition: width 0.3s ease; }
+
+  .question-text { font-size: 16px; font-weight: 600; margin-bottom: 18px; color: var(--text); white-space: pre-line; }
+  .hint-box { background: var(--amber-light); border-left: 4px solid var(--amber); padding: 12px 16px; border-radius: 4px 8px 8px 4px; margin-bottom: 18px; font-size: 14px; color: var(--amber); }
+
+  .options-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .option-item { display: flex; align-items: flex-start; padding: 14px 16px; border: 1px solid var(--gray-border); border-radius: 12px; cursor: pointer; transition: all 0.2s ease; background: white; font-size: 15px; }
+  .option-item:hover { border-color: #94a3b8; background: #f8fafc; }
+  .option-item.selected { border-color: var(--primary); background: var(--primary-light); color: var(--primary-dark); font-weight: 500; }
+  
+  .option-item.correct-reveal { border-color: var(--green-mid); background: var(--green-light); color: var(--green); font-weight: 500; }
+  .option-item.wrong-reveal { border-color: var(--red-mid); background: var(--red-light); color: var(--red); }
+  .option-item.disabled { cursor: not-allowed; pointer-events: none; }
+
+  .radio-dot { height: 18px; min-width: 18px; border: 2px solid #cbd5e1; border-radius: 50%; margin-right: 12px; margin-top: 2px; position: relative; display: inline-block; }
+  .option-item.selected .radio-dot { border-color: var(--primary); }
+  .option-item.selected .radio-dot::after { content: ''; position: absolute; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; top: 2px; left: 2px; }
+  .option-item.correct-reveal .radio-dot { border-color: var(--green); }
+  .option-item.correct-reveal .radio-dot::after { content: '✓'; color: var(--green); font-size: 12px; font-weight: bold; position: absolute; top: -4px; left: 2px; }
+  .option-item.wrong-reveal .radio-dot { border-color: var(--red); }
+  .option-item.wrong-reveal .radio-dot::after { content: '✕'; color: var(--red); font-size: 12px; font-weight: bold; position: absolute; top: -4px; left: 2px; }
+
+  .rationale-box { padding: 14px 16px; border-radius: 10px; font-size: 14px; margin-bottom: 18px; animation: fadeIn 0.3s ease; }
+  .rationale-box.correct { background: var(--green-light); border: 1px dashed var(--green-mid); color: var(--green); }
+  .rationale-box.wrong { background: var(--red-light); border: 1px dashed var(--red-mid); color: var(--red); }
+
+  .nav-actions { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; }
+  .btn { flex: 1; padding: 12px 16px; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.2s; text-decoration: none; }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-primary:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
+  .btn-secondary { background: #e2e8f0; color: var(--text); }
+  .btn-secondary:hover { background: #cbd5e1; }
+  .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Certificate / Summary Style */
+  .summary-card { text-align: center; padding: 32px 24px; position: relative; }
+  .student-info-box { background: #f8fafc; border: 1px dashed var(--primary); padding: 16px; border-radius: 12px; margin: 16px 0; text-align: left; }
+  .student-info-box p { font-size: 14px; margin-bottom: 4px; color: var(--text); }
+  .student-info-box p b { color: var(--primary); }
+  
+  .grade-pill { display: inline-block; padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 16px; margin: 8px 0; }
+  .grade-pass { background: var(--green-light); color: var(--green); border: 1px solid var(--green-mid); }
+  .grade-fail { background: var(--red-light); color: var(--red); border: 1px solid var(--red-mid); }
+  
+  .grid-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
+  .stat-box { background: #f8fafc; border: 1px solid var(--gray-border); padding: 12px; border-radius: 10px; text-align: center; }
+  .stat-num { font-size: 20px; font-weight: 700; }
+  .slbl { font-size: 12px; color: var(--text-muted); }
+
+  .review-title { font-size: 16px; font-weight: 700; margin-bottom: 14px; text-align: left; border-bottom: 2px solid var(--gray-border); padding-bottom: 6px; }
+  .review-item { text-align: left; padding: 14px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+  .review-item:last-child { border-bottom: none; }
+  
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header-card">
+    <h1>สกร.โนนสัง ระดับประถมศึกษา — แบบทดสอบ N-NET</h1>
+    <p>วิชาภาษาอังกฤษประยุกต์ใช้เชิงสถานการณ์ (ชุดที่ 4: ระดับท้าทาย)</p>
+  </div>
+
+  <div id="quiz-app"></div>
+</div>
+
+<script>
+const quizData = {
+  "questions": [
+    {
+      "question": "At a clinic:\nDoctor: \"How are you feeling today?\"\nPatient: \"___________ I have a bad cough.\"",
+      "answerOptions": [
+        { "text": "I'm not well.", "rationale": "ถูกต้อง เป็นการบอกอาการป่วยที่สุภาพเมื่อหมอถามถึงความรู้สึก", "isCorrect": true },
+        { "text": "I'm fine, thank you.", "rationale": "ตัวลวงยอดฮิต แต่บริบทผิด เพราะผู้ป่วยไอหนักมาก (bad cough) จะบอกว่าสบายดีไม่ได้", "isCorrect": false },
+        { "text": "I'm nice to meet you.", "rationale": "โครงสร้างผิดรูปประโยค และใช้สำหรับการทักทายแรกเจอ ไม่ใช่ตอบอาการป่วย", "isCorrect": false },
+        { "text": "I like my healthy body.", "rationale": "ความหมายตรงข้ามกับความจริง เพราะผู้ป่วยกำลังป่วย ไม่ได้มีสุขภาพที่ดีในตอนนี้", "isCorrect": false }
+      ],
+      "hint": "ดูประโยคข้างหลัง 'I have a bad cough' (ฉันไอหนักมาก) แสดงว่าอาการต้องไม่ดี"
+    },
+    {
+      "question": "Situation: Anna wants to buy some oranges.\nAnna: \"Excuse me, _________ are these oranges?\"\nSeller: \"They are 50 Baht per kilogram.\"",
+      "answerOptions": [
+        { "text": "How much", "rationale": "ถูกต้อง ใช้ถามราคาของสิ่งของที่ต้องการซื้อ", "isCorrect": true },
+        { "text": "How many", "rationale": "ใช้ถาม 'จำนวน' ของส้มว่ามีกี่ลูก ไม่ใช้ถามราคาที่เป็นหน่วยเงิน", "isCorrect": false },
+        { "text": "How old", "rationale": "ใช้ถาม 'อายุ' ซึ่งไม่สามารถใช้ถามราคาสินค้าได้", "isCorrect": false },
+        { "text": "How long", "rationale": "ใช้ถาม 'ความยาว' หรือ 'ระยะเวลา' ไม่สอดคล้องกับคำตอบที่เป็นหน่วยบาท", "isCorrect": false }
+      ],
+      "hint": "คำตอบคือ '50 Baht' (50 บาท) ซึ่งเป็นเรื่องของหน่วยราคา"
+    },
+    {
+      "question": "Situation: Tom accidentally steps on Mary's foot.\nTom: \"Oh! I'm really sorry.\"\nMary: \"_________ It's okay.\"",
+      "answerOptions": [
+        { "text": "No problem.", "rationale": "ถูกต้อง เป็นสำนวนที่ใช้ตอบรับการขอโทษ แปลว่า 'ไม่เป็นไร'", "isCorrect": true },
+        { "text": "You're welcome.", "rationale": "ตัวลวงสำคัญ! สำนวนนี้ใช้ตอบรับเมื่อมีคนมา 'ขอบคุณ' ไม่ใช่ตอบรับการ 'ขอโทษ'", "isCorrect": false },
+        { "text": "Thank you.", "rationale": "ไม่สอดคล้องกับสถานการณ์ โดนเหยียบเท้าไม่จำเป็นต้องขอบคุณ", "isCorrect": false },
+        { "text": "Great job!", "rationale": "ใช้สำหรับชื่นชมเมื่อคนอื่นทำสิ่งดีๆ สำเร็จ ไม่ตรงกับเหตุการณ์อุบัติเหตุ", "isCorrect": false }
+      ],
+      "hint": "เมื่อผู้อื่นขอโทษ (sorry) และพูดต่อว่า 'It's okay' เราควรเลือกคำตอบที่แปลว่าไม่เป็นไรเช่นกัน"
+    },
+    {
+      "question": "Look at the sign:\n[❌ DO NOT FEED THE ANIMALS]\nWhere can you see this sign?",
+      "answerOptions": [
+        { "text": "At a zoo", "rationale": "ถูกต้อง ป้ายห้ามให้อาหารสัตว์มักจะพบเห็นในสวนสัตว์เพื่อความปลอดภัยของสัตว์", "isCorrect": true },
+        { "text": "At a library", "rationale": "ห้องสมุดเป็นสถานที่อ่านหนังสือ ไม่มีสัตว์ป่าให้ห้ามให้อาหาร", "isCorrect": false },
+        { "text": "At a food market", "rationale": "ตลาดสดขายอาหารเพื่อคนกิน ไม่ใช่สถานที่อยู่อาศัยของสัตว์ป่า", "isCorrect": false },
+        { "text": "At a bus station", "rationale": "สถานีขนส่งรถโดยสาร ไม่สอดคล้องกับบริบทการดูแลสัตว์", "isCorrect": false }
+      ],
+      "hint": "คีย์เวิร์ดคือคำว่า 'FEED' (ให้อาหาร) และ 'ANIMALS' (สัตว์ทั้งหลาย)"
+    },
+    {
+      "question": "Stranger: \"Excuse me, can you tell me the way to the hospital?\"\nYou: \"___________ The hospital is on your left.\"",
+      "answerOptions": [
+        { "text": "Go straight and turn right.", "rationale": "ถูกต้อง เป็นการบอกทางที่สอดคล้องสมบูรณ์และสุภาพ", "isCorrect": true },
+        { "text": "Yes, I am a doctor.", "rationale": "คนถามต้องการทราบเส้นทาง ไม่ได้ถามอาชีพของคุณ", "isCorrect": false },
+        { "text": "I like the food there.", "rationale": "เป็นการแสดงความคิดเห็นส่วนตัวเรื่องอาหาร ไม่ได้ช่วยบอกทางตามที่ขอ", "isCorrect": false },
+        { "text": "No, I am not a hospital.", "rationale": "ความหมายผิดเพี้ยน ตัวเราไม่ใช่สถานที่อยู่แล้ว", "isCorrect": false }
+      ],
+      "hint": "เขาถามทาง 'tell me the way' เราต้องตอบด้วยประโยคคำสั่งบอกทิศทางเดินรถหรือเดินเท้า"
+    },
+    {
+      "question": "Which of the following months comes right before November?",
+      "answerOptions": [
+        { "text": "October", "rationale": "ถูกต้อง เดือนตุลาคม (October) มาถึงก่อนพฤศจิกายน (November)", "isCorrect": true },
+        { "text": "December", "rationale": "เดซัมเบอร์คือเดือนธันวาคม ซึ่งมา 'ทีหลัง' (after) ไม่ใช่ก่อนหน้า", "isCorrect": false },
+        { "text": "September", "rationale": "กันยายนอยู่ห่างออกไปสองเดือน ไม่ได้อยู่ติดกันก่อนหน้าพอดี", "isCorrect": false },
+        { "text": "January", "rationale": "มกราคมเป็นเดือนแรกของปี ไม่ตรงเงื่อนไขลำดับ", "isCorrect": false }
+      ],
+      "hint": "คำว่า 'before' แปลว่า 'ก่อนหน้า' เดือนอะไรอยู่ก่อนพฤศจิกายน"
+    },
+    {
+      "question": "If today is Tuesday, what day was yesterday?",
+      "answerOptions": [
+        { "text": "Monday", "rationale": "ถูกต้อง ถแต่วันนี้คือวันอังคาร วันวานนี้ย่อมเป็นวันจันทร์", "isCorrect": true },
+        { "text": "Wednesday", "rationale": "วันพุธคือวันพรุ่งนี้ (tomorrow) ไม่ใช่วันวานนี้", "isCorrect": false },
+        { "text": "Thursday", "rationale": "วันพฤหัสบดีคือวันถัดไปจากวันพุธ ไม่สอดคล้อง", "isCorrect": false },
+        { "text": "Sunday", "rationale": "วันอาทิตย์ห่างเกินไป ไม่ใช่วันที่ติดกันย้อนหลัง 1 วัน", "isCorrect": false }
+      ],
+      "hint": "คำว่า 'yesterday' แปลว่า 'เมื่อวานนี้' ถ้านับถอยหลังจากวันอังคาร (Tuesday) จะเป็นวันใด"
+    },
+    {
+      "question": "Suda: \"What is your favorite subject?\"\nMalee: \"__________ because I like learning about numbers.\"",
+      "answerOptions": [
+        { "text": "Mathematics", "rationale": "ถูกต้อง วิชาคณิตศาสตร์เป็นวิชาที่เกี่ยวกับการเรียนรู้เรื่องตัวเลข", "isCorrect": true },
+        { "text": "English", "rationale": "วิชาภาษาอังกฤษเน้นทักษะภาษาและการสื่อสาร ไม่ใช่ตัวเลขเป็นหลัก", "isCorrect": false },
+        { "text": "History", "rationale": "วิชาประวัติศาสตร์เน้นเรื่องราวในอดีตและบุคคลสำคัญ", "isCorrect": false },
+        { "text": "Art", "rationale": "วิชาศิลปะเน้นเรื่องการวาดรูป ระบายสี และจินตนาการความคิดสร้างสรรค์", "isCorrect": false }
+      ],
+      "hint": "ใจความสำคัญคือท้ายประโยคที่บอกว่า 'numbers' (ตัวเลข)"
+    },
+    {
+      "question": "John: \"Look at those dark clouds! It _________ rain very soon.\"",
+      "answerOptions": [
+        { "text": "is going to", "rationale": "ถูกต้อง ใช้ be going to เมื่อเห็นหลักฐานแน่ชัดในปัจจุบัน (เมฆครึ้ม dark clouds)", "isCorrect": true },
+        { "text": "was", "rationale": "กริยาอดีตใช้ไม่ได้กับเหตุการณ์ที่จะเกิดขึ้นในอนาคตอันใกล้ (very soon)", "isCorrect": false },
+        { "text": "are", "rationale": "ผิดหลักไวยากรณ์เพราะประธานคือ It ต้องใช้คู่กับกริยาเอกพจน์", "isCorrect": false },
+        { "text": "not", "rationale": "ปฏิเสธลอยๆ โดยไม่มีกริยาช่วยทำให้โครงสร้างประโยคเสียสมบูรณ์", "isCorrect": false }
+      ],
+      "hint": "มีหลักฐานมองเห็นชัดเจนในปัจจุบันคือ 'dark clouds' (เมฆสีดำ/เมฆครึ้ม)"
+    },
+    {
+      "question": "Ben: \"How do you go to the market?\"\nKala: \"I go there _________ because it is very close to my house.\"",
+      "answerOptions": [
+        { "text": "on foot", "rationale": "ถูกต้อง 'on foot' แปลว่าเดินไป สอดคล้องกับเหตุผลที่บ้านอยู่ใกล้มาก", "isCorrect": true },
+        { "text": "by plane", "rationale": "บ้านอยู่ใกล้ตลาดมาก ไม่จำเป็นต้องใช้เครื่องบินข้ามจังหวัด", "isCorrect": false },
+        { "text": "by boat", "rationale": "เป็นยานพาหนะทางน้ำที่ไม่สอดคล้องกับเหตุผลเรื่องระยะทางใกล้จากบ้านปกติ", "isCorrect": false },
+        { "text": "with car", "rationale": "ผิดหลักไวยากรณ์ ยานพาหนะต้องใช้บุพบท 'by car' ไม่ใช้ with", "isCorrect": false }
+      ],
+      "hint": "สังเกตคำว่า 'very close' แปลว่าใกล้มากๆ การเดินทางที่ง่ายที่สุดคือการเดินไป"
+    },
+    {
+      "question": "Teacher: \"It's very noisy in here. Please _________ your books and start reading silently.\"",
+      "answerOptions": [
+        { "text": "open", "rationale": "ถูกต้อง การสั่งให้เปิดหนังสือเพื่อเริ่มอ่านอย่างสงบ", "isCorrect": true },
+        { "text": "close", "rationale": "ถ้าปิดหนังสือ (close) นักเรียนก็จะไม่สามารถอ่านเนื้อหาข้างในได้", "isCorrect": false },
+        { "text": "throw", "rationale": "แปลว่าขว้าง/ปา ซึ่งเป็นกิริยาที่ไม่สุภาพและไม่ควรทำในห้องเรียน", "isCorrect": false },
+        { "text": "eat", "rationale": "หนังสือเรียนไม่ใช่ของกิน ความหมายผิดบริบทอย่างสิ้นเชิง", "isCorrect": false }
+      ],
+      "hint": "จุดประสงค์คือเพื่อให้นักเรียน 'start reading' (เริ่มอ่านหนังสือ)"
+    },
+    {
+      "question": "Peter: \"What does your father do?\"\nJane: \"He works at a restaurant. He cooks delicious food. He is a _________.\"",
+      "answerOptions": [
+        { "text": "chef", "rationale": "ถูกต้อง เชฟหรือพ่อครัวมีหน้าที่ทำอาหารในร้านอาหาร", "isCorrect": true },
+        { "text": "teacher", "rationale": "ครูมีหน้าที่สอนหนังสือในโรงเรียน ไม่ใช่ทำอาหารในร้านอาหาร", "isCorrect": false },
+        { "text": "postman", "rationale": "บุรุษไปรษณีย์มีหน้าที่ส่งจดหมายหรือพัสดุ", "isCorrect": false },
+        { "text": "driver", "rationale": "คนขับรถมีหน้าที่ขับขี่ยานพาหนะรับส่งผู้โดยสารหรือสินค้า", "isCorrect": false }
+      ],
+      "hint": "พิจารณาข้อความที่ว่า 'works at a restaurant' และ 'cooks food' (ทำอาหาร)"
+    },
+    {
+      "question": "Situation: At the dinner table.\nSon: \"Can you pass me the salt, please?\"\nMother: \"_________ Here it is.\"",
+      "answerOptions": [
+        { "text": "Sure.", "rationale": "ถูกต้อง เป็นคำตอบรับส่งของให้ผู้อื่นด้วยความเต็มใจ", "isCorrect": true },
+        { "text": "No, thank you.", "rationale": "เป็นประโยคปฏิเสธเมื่อมีคนเอาของมาให้ ไม่ใช่ปฏิเสธการช่วยเหลือส่งของ", "isCorrect": false },
+        { "text": "I don't like salt.", "rationale": "แม่เป็นคนส่งให้ ไม่จำเป็นต้องบอกรสนิยมความชอบของตัวเองในบริบทนี้", "isCorrect": false },
+        { "text": "Goodbye.", "rationale": "ใช้พูดเมื่อต้องการลาจาก ไม่ใช่พูดระหว่างทานข้าวร่วมกัน", "isCorrect": false }
+      ],
+      "hint": "ประโยคลงท้ายคือ 'Here it is' (นี่ค่ะ/นี่ครับ) แสดงว่าผู้พูดตกลงที่จะส่งของให้"
+    },
+    {
+      "question": "Which animal can fly high in the sky and builds its nest on trees?",
+      "answerOptions": [
+        { "text": "A bird", "rationale": "ถูกต้อง นกเป็นสัตว์ที่มีปีก บินได้สูง และสร้างรังบนต้นไม้", "isCorrect": true },
+        { "text": "A fish", "rationale": "ปลาอาศัยและว่ายน้ำอยู่ในน้ำ ไม่สามารถบินบนท้องฟ้าได้", "isCorrect": false },
+        { "text": "A dog", "rationale": "สุนัขเป็นสัตว์สี่เท้า เดินบนพื้นดิน ไม่สามารถบินได้", "isCorrect": false },
+        { "text": "A rabbit", "rationale": "กระต่ายอาศัยอยู่บนพื้นดินหรือขุดโพรงดิน ไม่ได้อยู่บนต้นไม้สูง", "isCorrect": false }
+      ],
+      "hint": "คำสำคัญคือคำกริยา 'fly high' (บินสูง) และคำนาม 'nest' (รังนก)"
+    },
+    {
+      "question": "Look at the weather forecast sign: [🌧️⚡]\nYou should bring an _________ with you when going outside.",
+      "answerOptions": [
+        { "text": "umbrella", "rationale": "ถูกต้อง ร่มจำเป็นต้องใช้เพื่อป้องกันฝนตกตามรูปสัญลักษณ์", "isCorrect": true },
+        { "text": "eraser", "rationale": "ยางลบเป็นเครื่องเขียน ไม่สามารถนำมาใช้ป้องกันฝนหรือพายุได้", "isCorrect": false },
+        { "text": "ice cream", "rationale": "ของหวานแช่แข็ง ไม่สอดคล้องกับสภาพอากาศฝนฟ้าคะนอง", "isCorrect": false },
+        { "text": "hat", "rationale": "หมวกอาจช่วยกันฝนได้เล็กน้อย แต่โครงสร้างนำหน้าด้วย 'an' ต้องตามด้วยคำขึ้นต้นสระ (u)", "isCorrect": false }
+      ],
+      "hint": "สังเกตรูปภาพสัญลักษณ์ฝนตกฟ้าร้อง และคำนำหน้านาม 'an' ที่ต้องตามด้วยเสียงสระ"
+    },
+    {
+      "question": "My sister has three cats. _________ are very cute and playful.",
+      "answerOptions": [
+        { "text": "They", "rationale": "ถูกต้อง ใช้สรรพนาม 'They' แทนคำนามพหูพจน์ (three cats)", "isCorrect": true },
+        { "text": "It", "rationale": "ใช้แทนสัตว์ตัวเดียว (เอกพจน์) แต่ในโจทย์มีแมว 3 ตัวจึงผิดพจน์", "isCorrect": false },
+        { "text": "He", "rationale": "ใช้แทนผู้ชายหนึ่งคน ไม่ใช้แทนกลุ่มสัตว์เลี้ยงพหูพจน์", "isCorrect": false },
+        { "text": "She", "rationale": "ใช้แทนผู้หญิงหนึ่งคน ไม่สอดคล้องกับแมวหลายตัว", "isCorrect": false }
+      ],
+      "hint": "ประธานที่ต้องแทนคือ 'three cats' ซึ่งเป็นสัตว์ที่มีจำนวนมากกว่าหนึ่ง (พหูพจน์)"
+    },
+    {
+      "question": "Choosing the correct order to form a question:\n1: you / 2: live / 3: Where / 4: do",
+      "answerOptions": [
+        { "text": "3 - 4 - 1 - 2", "rationale": "ถูกต้อง โครงสร้างประโยคคำถามคือ Wh-Question + do/does + Subject + Verb (Where do you live?)", "isCorrect": true },
+        { "text": "1 - 2 - 3 - 4", "rationale": "เรียงลำดับผิดโครงสร้างหลักภาษาอังกฤษทำให้อ่านไม่เข้าใจ", "isCorrect": false },
+        { "text": "3 - 1 - 4 - 2", "rationale": "สลับตำแหน่งคำกริยาช่วย do กับประธาน you ซึ่งผิดกฎไวยากรณ์", "isCorrect": false },
+        { "text": "4 - 3 - 1 - 2", "rationale": "เอาคำกริยาช่วยขึ้นก่อน Wh-Question ไม่ถูกต้องตามหลักสากล", "isCorrect": false }
+      ],
+      "hint": "ประโยคคำถามนี้ถามว่า 'คุณอาศัยอยู่ที่ไหน' ให้ขึ้นต้นด้วยคำว่า Where"
+    },
+    {
+      "question": "A: \"Would you like some milk?\"\nB: \"__________, I am full. I just had a big glass of water.\"",
+      "answerOptions": [
+        { "text": "No, thank you", "rationale": "ถูกต้อง เป็นประโยคปฏิเสธข้อเสนออย่างสุภาพเนื่องจากอิ่มแล้ว (I am full)", "isCorrect": true },
+        { "text": "Yes, please", "rationale": "ใช้ตอบรับเมื่อต้องการเอาของชิ้นนั้น แต่บริบทบอกว่าอิ่มแล้วจึงขัดแย้งกัน", "isCorrect": false },
+        { "text": "You are right", "rationale": "clean แปลว่า 'คุณพูดถูกนะ' ไม่ใช่คำตอบรับหรือปฏิเสธของกิน", "isCorrect": false },
+        { "text": "I like milk", "rationale": "ถ้าชอบและต้องการกิน จะขัดแย้งกับคำบอกเล่าว่าตนเองอิ่มแล้วในประโยคถัดไป", "isCorrect": false }
+      ],
+      "hint": "คำสำคัญคือ 'I am full' แปลว่าฉันอิ่มแล้ว ดังนั้นต้องปฏิเสธอย่างมีมารยาท"
+    },
+    {
+      "question": "What time is it when the short hand points to 9 and the long hand points to 12?",
+      "answerOptions": [
+        { "text": "Nine o'clock", "rationale": "ถูกต้อง เข็มสั้นชี้เลข 9 และเข็มยาวชี้เลข 12 คือเวลาเก้าโมงตรง", "isCorrect": true },
+        { "text": "Twelve o'clock", "rationale": "สับสนระว่างเข็มสั้นและเข็มยาว ข้อนี้คือเที่ยงตรงไม่ใช่เก้าโมง", "isCorrect": false },
+        { "text": "Half past nine", "rationale": "แปลว่า 9 โมงครึ่ง ซึ่งเข็มยาวต้องชี้ที่เลข 6 ไม่ใช่เลข 12", "isCorrect": false },
+        { "text": "Nine fifteen", "rationale": "แปลว่า 9 โมง 15 นาที ซึ่งเข็มยาวต้องชี้ที่เลข 3", "isCorrect": false }
+      ],
+      "hint": "เข็มสั้นบอกชั่วโมง (short hand = 9) เข็มยาวบอกนาที (long hand = 12 คือนาทีที่ 0)"
+    },
+    {
+      "question": "If you want to know the meaning of a new English word, what should you use?",
+      "answerOptions": [
+        { "text": "A dictionary", "rationale": "ถูกต้อง พจนานุกรมใช้สำหรับค้นหาความหมายและคำศัพท์ใหม่ๆ", "isCorrect": true },
+        { "text": "A notebook", "rationale": "สมุดบันทึกมีไว้ใช้จดงานหรือเขียนข้อมูล ไม่ใช่แหล่งค้นคว้าหาความหมายสำเร็จรูป", "isCorrect": false },
+        { "text": "A ruler", "rationale": "ไม้บรรทัดใช้สำหรับวัดความยาวและขีดเส้นตรง", "isCorrect": false },
+        { "text": "A calendar", "rationale": "ปฏิทินใช้สำหรับดูวัน เดือน ปี และวันสำคัญประจำปีเท่านั้น", "isCorrect": false }
+      ],
+      "hint": "มองหาเครื่องมือที่ใช้หาความหมายของคำศัพท์ภาษาอังกฤษ (meaning of word)"
+    }
+  ]
+};
+
+// Fisher-Yates Shuffle
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// Global State
+let state = {
+  isStarted: false,
+  studentName: '',
+  studentId: '',
+  studentLevel: 'สกร. ประถมศึกษา',
+  questions: [],
+  current: 0,
+  answers: [],
+  checked: []
+};
+
+function initQuiz() {
+  let shuffledQuestions = shuffleArray([...quizData.questions]);
+  shuffledQuestions = shuffledQuestions.map(q => {
+    let opts = shuffleArray([...q.answerOptions]);
+    return { ...q, answerOptions: opts };
+  });
+
+  state.questions = shuffledQuestions;
+  state.current = 0;
+  state.answers = new Array(shuffledQuestions.length).fill(null);
+  state.checked = new Array(shuffledQuestions.length).fill(false);
+}
+
+function startQuiz() {
+  const nameInput = document.getElementById('input-name').value.trim();
+  const idInput = document.getElementById('input-id').value.trim();
+  
+  if (!nameInput || !idInput) {
+    alert('กรุณากรอกชื่อ-นามสกุล และรหัสนักศึกษาให้ครบถ้วนก่อนเริ่มทำข้อสอบครับ');
+    return;
+  }
+  
+  state.studentName = nameInput;
+  state.studentId = idInput;
+  state.isStarted = true;
+  
+  initQuiz();
+  renderApp();
+}
+
+function renderApp() {
+  const app = document.getElementById('quiz-app');
+  
+  // หน้าแรก: ลงทะเบียนนักศึกษา
+  if (!state.isStarted) {
+    app.innerHTML = `
+      <div class="card" style="animation: fadeIn 0.4s ease;">
+        <h2 style="font-size: 18px; margin-bottom: 16px; color: var(--primary); text-align: center; font-weight: 700;">📝 ข้อมูลผู้เข้าทดสอบ</h2>
+        
+        <div class="form-group">
+          <label for="input-name">ชื่อ - นามสกุล *</label>
+          <input type="text" id="input-name" class="form-control" placeholder="ตัวอย่าง: นายสมชาย ตั้งใจเรียน" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="input-id">รหัสนักศึกษา *</label>
+          <input type="text" id="input-id" class="form-control" placeholder="ตัวอย่าง: 66XXXXXXXX" required>
+        </div>
+        
+        <div class="form-group">
+          <label>ระดับการศึกษา</label>
+          <input type="text" class="form-control" value="${state.studentLevel}" disabled style="background-color: #f1f5f9; font-weight: 600;">
+        </div>
+        
+        <button class="btn btn-primary" onclick="startQuiz()" style="width: 100%; margin-top: 10px; font-size: 16px;">🚀 เริ่มทำแบบทดสอบ</button>
+      </div>
+    `;
+    return;
+  }
+
+  // หน้าแสดงสรุปผลคะแนน
+  if (state.current >= state.questions.length) {
+    renderSummary(app);
+    return;
+  }
+
+  // หน้าข้อสอบทำรายข้อ
+  const q = state.questions[state.current];
+  const pct = Math.round((state.current / state.questions.length) * 100);
+  const selectedIdx = state.answers[state.current];
+  const isChecked = state.checked[state.current];
+
+  let hintHtml = q.hint ? `<div class="hint-box">💡 <b>คำใบ้แนวคิด:</b> ${q.hint}</div>` : '';
+  
+  let optionsHtml = q.answerOptions.map((opt, idx) => {
+    let cls = 'option-item';
+    if (selectedIdx === idx) cls += ' selected';
+    if (isChecked) {
+      cls += ' disabled';
+      if (opt.isCorrect) cls += ' correct-reveal';
+      else if (selectedIdx === idx) cls += ' wrong-reveal';
+    }
+    return `
+      <div class="${cls}" onclick="selectAnswer(${idx})">
+        <span class="radio-dot"></span>
+        <div style="flex-grow:1;">${opt.text}</div>
+      </div>
+    `;
+  }).join('');
+
+  let feedbackHtml = '';
+  if (isChecked && selectedIdx !== null) {
+    const isCorrect = q.answerOptions[selectedIdx].isCorrect;
+    const rationale = q.answerOptions[selectedIdx].rationale;
+    feedbackHtml = `
+      <div class="rationale-box ${isCorrect ? 'correct' : 'wrong'}">
+        <b>${isCorrect ? '✨ ถูกต้องดีมาก!' : '❌ คำตอบยังไม่ถูก'}</b> — ${rationale}
+      </div>
+    `;
+  }
+
+  app.innerHTML = `
+    <div class="card">
+      <div class="progress-container">
+        <span>ข้อที่ ${state.current + 1} จาก ${state.questions.length}</span>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+        <span>${pct}%</span>
+      </div>
+      
+      <div class="question-text">${q.question}</div>
+      ${hintHtml}
+      <div class="options-list">${optionsHtml}</div>
+      ${feedbackHtml}
+
+      <div class="nav-actions">
+        <button class="btn btn-secondary" onclick="goPrev()" ${state.current === 0 ? 'disabled' : ''}>⬅️ ข้อก่อนหน้า</button>
+        ${!isChecked ? 
+          `<button class="btn btn-primary" onclick="checkAnswer()" ${selectedIdx === null ? 'disabled' : ''}>✔️ ตรวจคำตอบ</button>` :
+          `<button class="btn btn-primary" onclick="goNext()">${state.current === state.questions.length - 1 ? '🏁 ดูสรุปผลคะแนน' : 'ข้อถัดไป ➡️'}</button>`
+        }
+      </div>
+    </div>
+  `;
+}
+
+function renderSummary(app) {
+  let score = 0;
+  let reviewHtml = '';
+
+  state.questions.forEach((q, i) => {
+    const userAnsIdx = state.answers[i];
+    const isCorrect = userAnsIdx !== null && q.answerOptions[userAnsIdx].isCorrect;
+    if (isCorrect) score++;
+
+    let correctOpt = q.answerOptions.find(o => o.isCorrect);
+    let userOpt = userAnsIdx !== null ? q.answerOptions[userAnsIdx] : null;
+
+    reviewHtml += `
+      <div class="review-item">
+        <div style="font-weight:600;margin-bottom:4px;">ข้อ ${i+1}: ${q.question}</div>
+        <div style="color:${isCorrect ? 'var(--green)' : 'var(--red)'}; font-weight:500;">
+          ${isCorrect ? '🔹 ตอบถูก' : `🔸 ตอบผิด (คุณเลือกช้อยส์: ${userOpt ? userOpt.text : 'ไม่ได้ทำ'})`}
+        </div>
+        <div style="color:var(--text-muted);font-size:13px;margin-top:2px;">
+          <b>คำอธิบายและตัวลวง:</b> ${correctOpt ? correctOpt.rationale : ''}
+        </div>
+      </div>
+    `;
+  });
+
+  const pct = Math.round((score / state.questions.length) * 100);
+  const isPass = pct >= 60;
+  const grade = isPass ? "ผ่านเกณฑ์การทดสอบประเมินผล 🎉" : "ควรทบทวนเนื้อหาเพิ่มเติม 📚";
+  const gc = isPass ? "grade-pass" : "grade-fail";
+  const msg = isPass ? "เก่งมากครับ! คุณมีทักษะการประยุกต์ใช้ภาษาอังกฤษในชีวิตประจำวันได้ดี" : "พยายามอีกนิดนะครับ แนะนำให้อ่านทบทวนคำอธิบายเฉลยในข้อที่ตอบผิดเพื่อแก้ไขจุดบกพร่อง";
+
+  app.innerHTML = `
+    <div class="card summary-card" style="border: 2px solid var(--primary);">
+      <h2 style="font-size:22px; margin-bottom:4px; color: var(--primary); font-weight:700;">📋 ใบรายงานผลการทดสอบ</h2>
+      <div style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">แอปพลิเคชันทดสอบระบบดิจิทัล สกร.</div>
+      
+      <div class="student-info-box">
+        <p>👤 <b>ชื่อ-นามสกุล:</b> ${state.studentName}</p>
+        <p>🆔 <b>รหัสนักศึกษา:</b> ${state.studentId}</p>
+        <p>🏅 <b>ระดับการศึกษา:</b> ${state.studentLevel}</p>
+      </div>
+
+      <div style="font-size:15px;color:var(--text-muted); margin-top:12px;">ทำคะแนนได้รวมทั้งสิ้น ${score} จากทั้งหมด ${state.questions.length} ข้อ</div>
+      <div style="margin:8px 0;"><span class="grade-pill ${gc}">${grade}</span></div>
+      <div style="color:var(--text-muted);margin-bottom:16px;font-size:14px;">${msg}</div>
+      
+      <div class="grid-stats">
+        <div class="stat-box"><div class="stat-num" style="color:var(--green)">${score}</div><div class="slbl">ตอบถูก (ข้อ)</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--red)">${state.questions.length - score}</div><div class="slbl">ตอบผิด (ข้อ)</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--primary)">${pct}%</div><div class="slbl">คะแนนเฉลี่ย</div></div>
+      </div>
+      
+      <p style="font-size:12px; color:var(--red); font-weight:600; margin-bottom:16px;">💡 นักศึกษาสามารถแคปภาพหน้าจอนี้ (ข้อมูลพร้อมคะแนน) ส่งคุณครูเพื่อเป็นหลักฐานได้เลยครับ</p>
+      
+      <button class="btn btn-primary" onclick="restartQuiz()">🔄 ทำแบบทดสอบอีกครั้ง (สุ่มแบบใหม่)</button>
+    </div>
+    
+    <div class="card" style="margin-top:4px;">
+      <div class="review-title">📋 เฉลยคำตอบและวิเคราะห์เหตุผลอย่างละเอียด</div>
+      ${reviewHtml}
+    </div>
+  `;
+}
+
+function selectAnswer(i) { if (!state.checked[state.current]) { state.answers[state.current] = i; renderApp(); } }
+function checkAnswer()   { if (state.answers[state.current] !== null) { state.checked[state.current] = true; renderApp(); } }
+function goNext()        { state.current++; renderApp(); }
+function goPrev()        { if (state.current > 0) { state.current--; renderApp(); } }
+function restartQuiz()   { 
+  state.isStarted = false; 
+  renderApp(); 
+}
+
+// เริ่มต้นเรียกใช้งานหน้าแรก
+renderApp();
+</script>
+</body>
+</html>
